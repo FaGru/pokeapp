@@ -1,8 +1,11 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import Pokecard from './components/Pokecard';
 import axios from 'axios';
 import styled from 'styled-components';
+import DetailPage from './pages/DetailPage';
+
+import Home from './pages/Home';
 
 const App: React.FC = () => {
   const [pokemonList, setPokemonList] = useState<any[]>([]);
@@ -27,27 +30,14 @@ const App: React.FC = () => {
   return (
     <>
       <h1>Poke World</h1>
-      <PokemonContainer>
+      <Routes>
+        <Route path="/" element={<Home pokemonList={pokemonList} />} />
         {pokemonList.map(pokemon => (
-          <Pokecard
-            key={pokemon.id}
-            name={pokemon.name}
-            number={pokemon.id}
-            types={pokemon.types}
-            image={pokemon.sprites.front_default}
-            color={pokemon.types[0].type.name}
-          />
+          <Route path={`/pokemon${pokemon.id}`} element={<DetailPage />} />
         ))}
-      </PokemonContainer>
+      </Routes>
     </>
   );
 };
 
 export default App;
-
-const PokemonContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-`;
