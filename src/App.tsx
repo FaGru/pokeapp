@@ -1,26 +1,53 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import Pokecard from './components/Pokecard';
+import axios from 'axios';
+import styled from 'styled-components';
 
-function App() {
+const App: React.FC = () => {
+  const [pokemonList, setPokemonList] = useState<any[]>([]);
+  const [fetchCounter, setFetchCounter] = useState<number>(1);
+
+  useEffect(() => {
+    if (fetchCounter <= 150) {
+      const fetchData = async () => {
+        const res = await axios.get(
+          `https://pokeapi.co/api/v2/pokemon/${fetchCounter}`
+        );
+        const resData = res.data;
+
+        setPokemonList([...pokemonList, resData]);
+        setFetchCounter(prev => prev + 1);
+      };
+      fetchData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchCounter]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>Poke World</h1>
+      <PokemonContainer>
+        {pokemonList.map(pokemon => (
+          <Pokecard
+            key={pokemon.id}
+            name={pokemon.name}
+            number={pokemon.id}
+            types={pokemon.types}
+            image={pokemon.sprites.front_default}
+            color={pokemon.types[0].type.name}
+          />
+        ))}
+      </PokemonContainer>
+    </>
   );
-}
+};
 
 export default App;
+
+const PokemonContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+`;
