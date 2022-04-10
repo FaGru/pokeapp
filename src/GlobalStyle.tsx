@@ -9,24 +9,28 @@ const GlobalStyle = createGlobalStyle`
 
   :root {
     --card-color-normal: darkgray;
-    --card-color-grass: #14A06F;
-    --card-color-poison: lightgreen;
+    --card-color-grass: #008134;
+    --card-color-poison: #2db52d;
     --card-color-bug: darkgreen;
-    --card-color-fire: #F42A28;
-    --card-color-water: #37A5C6;
+    --card-color-fire: #97050f;
+    --card-color-water: #005ec9;
     --card-color-ice:#37A5C6;
     --card-color-psychic: purple;
     --card-color-ghost: purple;
-    --card-color-electric: yellow;
+    --card-color-electric: #faab00;
     --card-color-rock: #716B45;
     --card-color-fighting: #716B45;
     --card-color-ground: #716B45;
     --card-color-dragon: lightgray;
     --card-color-fairy: hotpink;
+
+    --card-color-gold: gold;
+    
   }
 
   body {
     background-color: white;
+    font-family: 'Roboto', sans-serif;
     h1 {
       text-align: center;
     }
