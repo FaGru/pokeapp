@@ -1,5 +1,65 @@
-function Pokecard() {
-  return <div>Pokecard</div>;
+import styled from 'styled-components';
+
+interface Props {
+  name: string;
+  number: number;
+  types: [any];
+  image: string;
+  color: string;
 }
+
+const Pokecard: React.FC<Props> = ({ name, number, types, image, color }) => {
+  console.log(types);
+  return (
+    <CardContainer color={color}>
+      <img src={image} alt={name} width="200" />
+      <p>Pokedex ID: {number}</p>
+      <p>Name: {name}</p>
+      <p>
+        Types:
+        {types.map(number => (
+          <p>{number.type.name}</p>
+        ))}
+      </p>
+    </CardContainer>
+  );
+};
+
+const CardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid darkgray;
+  width: 350px;
+  margin: 5px;
+  background-color: var(--card-color-${props => props.color});
+  border-radius: 20px;
+  box-shadow: 1px 1px darkgray, 0 15px 12px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+
+  &:hover {
+    transition: ease 0.5s;
+
+    animation: bounce 1s alternate;
+  }
+
+  @keyframes bounce {
+    20% {
+      transform: translateY(-10px);
+    }
+    40% {
+      transform: translateY(0px);
+    }
+
+    80% {
+      transform: translateY(-4px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+`;
 
 export default Pokecard;
