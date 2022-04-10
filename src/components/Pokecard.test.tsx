@@ -1,10 +1,7 @@
 import Pokecard from './Pokecard';
-
 import { render, screen } from '@testing-library/react';
 
 describe('Pokecard', () => {
-  const cardData = {};
-
   it('renders a Pokemon Card', () => {
     render(
       <Pokecard
@@ -30,6 +27,9 @@ describe('Pokecard', () => {
         ]}
       />
     );
-    const pokeCard = screen.getByText(/turtok/i);
+    const imageElement = screen.getByAltText('turtok')
+    const cardContainer = screen.getByTestId('card-container');
+    expect(cardContainer).toBeInTheDocument();
+    expect(imageElement).toBeInTheDocument();
   });
 });

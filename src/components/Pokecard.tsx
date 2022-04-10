@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { nanoid } from 'nanoid';
 
 interface Props {
   name: string;
@@ -25,13 +26,13 @@ interface Props {
 
 const Pokecard: React.FC<Props> = ({ name, number, types, image, color }) => {
   return (
-    <CardContainer color={color}>
+    <CardContainer data-testid="card-container" color={color}>
       <img src={image} alt={name} width="200" />
       <p>Pokedex ID: {number}</p>
       <p>Name: {name}</p>
 
       {types.map(number => (
-        <p key={name}>{number.type.name}</p>
+        <p key={nanoid()}>{number.type.name}</p>
       ))}
     </CardContainer>
   );
