@@ -3,24 +3,36 @@ import styled from 'styled-components';
 interface Props {
   name: string;
   number: number;
-  types: [any];
+  types: [
+    {
+      slot: Number;
+      type: {
+        name: String;
+        url: String;
+      };
+    },
+    {
+      slot: Number;
+      type: {
+        name: String;
+        url: String;
+      };
+    }
+  ];
   image: string;
   color: string;
 }
 
 const Pokecard: React.FC<Props> = ({ name, number, types, image, color }) => {
-  console.log(types);
   return (
     <CardContainer color={color}>
       <img src={image} alt={name} width="200" />
       <p>Pokedex ID: {number}</p>
       <p>Name: {name}</p>
-      <p>
-        Types:
-        {types.map(number => (
-          <p>{number.type.name}</p>
-        ))}
-      </p>
+
+      {types.map(number => (
+        <p key={name}>{number.type.name}</p>
+      ))}
     </CardContainer>
   );
 };
