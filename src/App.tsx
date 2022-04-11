@@ -2,10 +2,8 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
 import DetailPage from './pages/DetailPage';
-
-import Home from './pages/Home';
+import Home, { RootObject } from './pages/Home';
 
 const App: React.FC = () => {
   const [pokemonList, setPokemonList] = useState<any[]>([]);
@@ -18,23 +16,21 @@ const App: React.FC = () => {
           `https://pokeapi.co/api/v2/pokemon/${fetchCounter}`
         );
         const resData = res.data;
-
         setPokemonList([...pokemonList, resData]);
         setFetchCounter(prev => prev + 1);
       };
       fetchData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchCounter]);
-
+  console.log(pokemonList);
   return (
     <>
       <h1>Poke World</h1>
       <Routes>
         <Route path="/" element={<Home pokemonList={pokemonList} />} />
-        {pokemonList.map(pokemon => (
+        {/* {pokemonList.map(pokemon => (
           <Route path={`/pokemon${pokemon.id}`} element={<DetailPage />} />
-        ))}
+        ))} */}
       </Routes>
     </>
   );
