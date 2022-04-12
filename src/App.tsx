@@ -6,11 +6,12 @@ import DetailPage from './pages/DetailPage';
 import Home, { RootObject } from './pages/Home';
 
 const App: React.FC = () => {
-  const [pokemonList, setPokemonList] = useState<any[]>([]);
+  const [pokemonList, setPokemonList] = useState<RootObject[]>([]);
   const [fetchCounter, setFetchCounter] = useState<number>(1);
 
   useEffect(() => {
-    if (fetchCounter <= 150) {
+    console.log('useeffect');
+    if (fetchCounter <= 100) {
       const fetchData = async () => {
         const res = await axios.get(
           `https://pokeapi.co/api/v2/pokemon/${fetchCounter}`
@@ -21,16 +22,18 @@ const App: React.FC = () => {
       };
       fetchData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchCounter]);
   console.log(pokemonList);
+
   return (
     <>
       <h1>Poke World</h1>
       <Routes>
         <Route path="/" element={<Home pokemonList={pokemonList} />} />
-        {/* {pokemonList.map(pokemon => (
+        {pokemonList.map(pokemon => (
           <Route path={`/pokemon${pokemon.id}`} element={<DetailPage />} />
-        ))} */}
+        ))}
       </Routes>
     </>
   );

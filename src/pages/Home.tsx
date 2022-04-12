@@ -336,16 +336,16 @@ export interface RootObject {
   species: Species;
   sprites: Sprites;
   stats: Stat[];
-  types?: Type[];
+  types?: Type[] | any;
   weight: number;
 }
 
-const Test: React.FC<any[]> = pokemonList => {
+const Test: React.FC<{ pokemonList: RootObject[] }> = ({ pokemonList }) => {
   console.log(pokemonList);
 
   return (
     <PokemonContainer>
-      {pokemonList.map(pokemon => (
+      {pokemonList?.map(pokemon => (
         <Pokecard
           key={pokemon.id}
           name={pokemon.name}
