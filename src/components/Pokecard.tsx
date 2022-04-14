@@ -1,34 +1,25 @@
 import styled from 'styled-components';
 import { nanoid } from 'nanoid';
+import { useNavigate } from 'react-router-dom';
 
-interface Props {
-  name: string;
-  number: number;
-  types: [
-    {
-      slot: Number;
-      type: {
-        name: String;
-        url: String;
-      };
-    },
-    {
-      slot: Number;
-      type: {
-        name: String;
-        url: String;
-      };
-    }
-  ];
-  image: string;
-  color: string;
-}
+import { PokecardProps } from '../interfaces/interfaces';
 
-const Pokecard: React.FC<Props> = ({ name, number, types, image, color }) => {
+const Pokecard: React.FC<PokecardProps> = ({
+  name,
+  number,
+  types,
+  image,
+  color,
+}) => {
+  const navigate = useNavigate();
   return (
-    <CardContainer data-testid="card-container" color={color}>
+    <CardContainer
+      data-testid="card-container"
+      color={color}
+      onClick={() => navigate(`/pokemon-${number}`, { replace: true })}
+    >
       <PokedexID>{number}</PokedexID>
-      <PokemonName>{name}</PokemonName>
+      <PokemonName>{name[0].toUpperCase() + name.slice(1)}</PokemonName>
       <ImageContainer>
         <img src={image} alt={name} width="200" />
       </ImageContainer>
@@ -55,6 +46,7 @@ const PokedexID = styled.p`
   border: 1px solid black;
   margin-left: 20px;
   font-weight: bold;
+  color: black;
 `;
 const ImageContainer = styled.div`
   grid-column: 1 / 3;
@@ -113,6 +105,9 @@ const TypeContainer = styled.div`
   justify-self: center;
   display: flex;
   gap: 10px;
+  p {
+    font-size: 120%;
+  }
 `;
 
 const CardContainer = styled.div`
