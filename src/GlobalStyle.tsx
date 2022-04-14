@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import arena from './images/arena.jpg';
+
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
 
   :root {
     --card-color-normal: darkgray;
-    --card-color-grass: #008134;
+    --card-color-grass: #62B957;
     --card-color-poison: #2db52d;
     --card-color-bug: darkgreen;
     --card-color-fire: #97050f;
@@ -26,6 +26,8 @@ const GlobalStyle = createGlobalStyle`
     --card-color-fairy: hotpink;
 
     --card-color-gold: gold;
+
+
     
   }
 

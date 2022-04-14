@@ -26,7 +26,6 @@ const App: React.FC = () => {
   }, [fetchCounter]);
   return (
     <>
-      <h1>Poke World</h1>
       <Routes>
         <Route path="/" element={<Home pokemonList={pokemonList} />} />
         {pokemonList.map(pokemon => (
