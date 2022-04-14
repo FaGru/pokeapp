@@ -5,10 +5,10 @@ import axios from 'axios';
 import DetailPage from './pages/DetailPage';
 import Home from './pages/Home';
 
-import { RootObject } from './interfaces/interfaces';
+import { PokemonRootObject } from './interfaces/interfaces';
 
 const App: React.FC = () => {
-  const [pokemonList, setPokemonList] = useState<RootObject[]>([]);
+  const [pokemonList, setPokemonList] = useState<PokemonRootObject[]>([]);
   const [fetchCounter, setFetchCounter] = useState<number>(1);
 
   useEffect(() => {

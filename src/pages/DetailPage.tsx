@@ -3,11 +3,9 @@ import DetailAbout from '../components/DetailAbout';
 
 import styled from 'styled-components';
 
-import { RootObject } from '../interfaces/interfaces';
+import { PokemonRootObject } from '../interfaces/interfaces';
 
-const DetailPage: React.FC<{ pokemon: RootObject }> = ({ pokemon }) => {
-  console.log('in Detail page', pokemon);
-
+const DetailPage: React.FC<{ pokemon: PokemonRootObject }> = ({ pokemon }) => {
   return (
     <DetailPageContainer>
       <DetailHeader pokemon={pokemon} />
@@ -29,12 +27,4 @@ const DetailPage: React.FC<{ pokemon: RootObject }> = ({ pokemon }) => {
 };
 export default DetailPage;
 
-const DetailPageContainer = styled.div`
-  
-
-  text-align: center;
-
-  border-radius: 10px;
-
-  max-width: 1200px;
-`;
+const DetailPageContainer = styled.div``;
