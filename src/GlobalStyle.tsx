@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import arena from './images/arena.jpg';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -29,8 +30,10 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: white;
-    font-family: 'Roboto', sans-serif;
+    background-color: #3f3a3a;
+    color: white;
+    font-family: 'Caveat', cursive;
+    font-size: 112%;
     h1 {
       text-align: center;
     }
