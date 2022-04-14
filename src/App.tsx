@@ -12,20 +12,18 @@ const App: React.FC = () => {
   const [fetchCounter, setFetchCounter] = useState<number>(1);
 
   useEffect(() => {
-    if (fetchCounter <= 100) {
+    if (fetchCounter <= 150) {
       const fetchData = async () => {
-        const res = await axios.get(
+        const { data }: any = await axios.get(
           `https://pokeapi.co/api/v2/pokemon/${fetchCounter}`
         );
-        const resData = res.data;
-        setPokemonList([...pokemonList, resData]);
+        setPokemonList([...pokemonList, data]);
         setFetchCounter(prev => prev + 1);
       };
       fetchData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchCounter]);
-
   return (
     <>
       <h1>Poke World</h1>
@@ -33,18 +31,9 @@ const App: React.FC = () => {
         <Route path="/" element={<Home pokemonList={pokemonList} />} />
         {pokemonList.map(pokemon => (
           <Route
+            key={pokemon.id}
             path={`/pokemon-${pokemon.id}`}
-            element={
-              <DetailPage
-                key={pokemon.id}
-                name={pokemon.name}
-                number={pokemon.id}
-                types={pokemon.types}
-                color={pokemon.types[0].type.name}
-                sprites={pokemon.sprites}
-                abilities={pokemon.abilities}
-              />
-            }
+            element={<DetailPage pokemon={pokemon} />}
           />
         ))}
       </Routes>

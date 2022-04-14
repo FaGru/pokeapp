@@ -5,7 +5,7 @@ import { RootObject } from '../interfaces/interfaces';
 
 import Pokecard from '../components/Pokecard';
 
-const Test: React.FC<{ pokemonList: RootObject[] }> = ({ pokemonList }) => {
+const Test: React.FC<{ pokemonList: RootObject[] }> = ({pokemonList }) => {
   return (
     <PokemonContainer>
       {pokemonList?.map(pokemon => (

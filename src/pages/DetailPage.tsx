@@ -3,42 +3,37 @@ import { nanoid } from 'nanoid';
 import styled from 'styled-components';
 import { useState } from 'react';
 
-import { DetailPageProps } from '../interfaces/interfaces';
+import { RootObject, Type } from '../interfaces/interfaces';
 
-const DetailPage: React.FC<DetailPageProps> = ({
-  name,
-  number,
-  types,
-  color,
-  sprites,
-  abilities,
-}) => {
+const DetailPage: React.FC<{ pokemon: RootObject }> = ({ pokemon }) => {
   const navigate = useNavigate();
   const [isShiny, setIsShiny] = useState<boolean>(false);
+
+  console.log('in Detail page', pokemon);
 
   return (
     <>
       <button onClick={() => navigate('/', { replace: true })}>back</button>
-      <DetailContainer color={color}>
-        <p>Pokedex-ID: {number}</p>
-        <h2>{name}</h2>
+      <DetailContainer color={pokemon.types[0].type.name}>
+        <p>Pokedex-ID: {pokemon.id}</p>
+        <h2>{pokemon.name}</h2>
         <div>
           Types:
-          {types.map(number => (
-            <p key={nanoid()}>{number.type.name}</p>
+          {pokemon.types.map((types: Type) => (
+            <p key={nanoid()}>{types.type?.name}</p>
           ))}
         </div>
-        {abilities.map(ability => (
+        {pokemon.abilities.map(ability => (
           <p>{ability.ability.name}</p>
         ))}
         <ImageContainer onClick={() => setIsShiny(!isShiny)}>
           <img
             src={
               isShiny
-                ? sprites.other.home.front_shiny
-                : sprites.other.home.front_default
+                ? pokemon.sprites.other.home.front_shiny
+                : pokemon.sprites.other.home.front_default
             }
-            alt={name}
+            alt={pokemon.name}
             width="150px;"
             height="150px"
           />
