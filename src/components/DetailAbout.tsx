@@ -34,7 +34,7 @@ export const DetailAbout: React.FC<{ pokemon: PokemonRootObject }> = ({
     const fetchTypeData = async () => {
       setLoading(true);
       const { data }: any = await axios
-        .get(`https://pokeapi.co/api/v2/type/${pokemon.id}/`)
+        .get(pokemon.types[0].type.url)
         .catch(error => {
           setLoading(false);
           setError(true);
@@ -103,9 +103,24 @@ export const DetailAbout: React.FC<{ pokemon: PokemonRootObject }> = ({
             </Infobox>
             <Infobox>
               <p>Weaknesses</p>
-              <p>
-                <span>Weaknesses</span>
-              </p>
+              {pokemonTypeDetails?.damage_relations.double_damage_from?.map(
+                type => (
+                  <img
+                    key={type.name}
+                    alt={type.name}
+                    src={`./images/square-${type.name}.svg`}
+                  />
+                )
+              )}
+              {pokemonTypeDetails?.damage_relations.half_damage_to?.map(
+                type => (
+                  <img
+                    key={type.name}
+                    alt={type.name}
+                    src={`./images/square-${type.name}.svg`}
+                  />
+                )
+              )}
             </Infobox>
           </InfoContainer>
         </Container>
