@@ -6,38 +6,96 @@ import DetailPage from './pages/DetailPage';
 import Home from './pages/Home';
 
 import { PokemonRootObject } from './interfaces/interfaces';
+import styled from 'styled-components';
+
+import loadingSpinner from './images/loadingSpinner.svg';
 
 const App: React.FC = () => {
   const [pokemonList, setPokemonList] = useState<PokemonRootObject[]>([]);
-  const [fetchCounter, setFetchCounter] = useState<number>(1);
+  const [error, setError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (fetchCounter <= 150) {
-      const fetchData = async () => {
-        const { data }: any = await axios.get(
-          `https://pokeapi.co/api/v2/pokemon/${fetchCounter}`
-        );
-        setPokemonList([...pokemonList, data]);
-        setFetchCounter(prev => prev + 1);
-      };
-      fetchData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchCounter]);
+    setLoading(true);
+    const fetchPokemon = async () => {
+      let urlList: string[] = [];
+      for (let i = 1; i <= 150; i++) {
+        urlList = [...urlList, `https://pokeapi.co/api/v2/pokemon/${i}`];
+      }
+      Promise.all(urlList.map((url: string) => axios.get(url)))
+        .then((responses: Object[]) => {
+          let newData: PokemonRootObject[] = [];
+          responses.forEach((response: any) => {
+            newData = [...newData, response.data];
+          });
+          setLoading(false);
+          setPokemonList(newData);
+        })
+        .catch(error => {
+          setLoading(false);
+          setError(true);
+        });
+    };
+    fetchPokemon();
+  }, []);
+
+  const handleReload = () => {
+    window.location.reload();
+    setError(false);
+  };
+
+  if (loading === true) {
+    return (
+      <LoadingContainer>
+        <img src={loadingSpinner} alt="loading..." height="80" width="80"></img>
+      </LoadingContainer>
+    );
+  }
+
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home pokemonList={pokemonList} />} />
-        {pokemonList.map(pokemon => (
-          <Route
-            key={pokemon.id}
-            path={`/pokemon-${pokemon.id}`}
-            element={<DetailPage pokemon={pokemon} />}
-          />
-        ))}
-      </Routes>
+      {error ? (
+        <>
+          <h3 style={{ color: 'red', margin: '5px' }}>
+            Please reload there is an errror
+          </h3>
+          <Button onClick={handleReload}>RELOAD</Button>
+        </>
+      ) : (
+        <Routes>
+          <Route path="/" element={<Home pokemonList={pokemonList} />} />
+          {pokemonList?.map(pokemon => (
+            <Route
+              key={pokemon.id}
+              path={`/${pokemon.name}`}
+              element={<DetailPage pokemon={pokemon} />}
+            />
+          ))}
+        </Routes>
+      )}
     </>
   );
 };
 
 export default App;
+
+const Button = styled.button`
+  border-radius: 10px;
+  background-color: red;
+  color: white;
+  place-items: center;
+  box-shadow: 1px 1px 2px 0 black;
+  margin: 5px;
+  padding: 3px;
+  cursor: pointer;
+`;
+
+const LoadingContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform: -webkit-translate(-50%, -50%);
+  transform: -moz-translate(-50%, -50%);
+  transform: -ms-translate(-50%, -50%);
+`;
