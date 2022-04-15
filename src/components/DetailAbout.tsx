@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { PokemonRootObject } from '../interfaces/interfaces';
 import { SpeciesPokemonRootObject } from '../interfaces/species_interface';
+import { TypesPokemonRootObject } from '../interfaces/types_interface';
+
 import axios from 'axios';
 import loadingSpinner from '../images/loadingSpinner.svg';
 import { FetchErrorButton } from './Buttons';
@@ -14,9 +16,11 @@ export const DetailAbout: React.FC<{ pokemon: PokemonRootObject }> = ({
 
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [pokemonTypeDetails, setPokemonTypeDetails] =
+    useState<TypesPokemonRootObject | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchSpeciesData = async () => {
       setLoading(true);
       const { data }: any = await axios
         .get(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}/`)
@@ -24,11 +28,23 @@ export const DetailAbout: React.FC<{ pokemon: PokemonRootObject }> = ({
           setLoading(false);
           setError(true);
         });
-      setLoading(false);
       setPokemonSpeciesDetails(data);
     };
 
-    fetchData();
+    const fetchTypeData = async () => {
+      setLoading(true);
+      const { data }: any = await axios
+        .get(`https://pokeapi.co/api/v2/type/${pokemon.id}/`)
+        .catch(error => {
+          setLoading(false);
+          setError(true);
+        });
+      setLoading(false);
+      setPokemonTypeDetails(data);
+    };
+
+    fetchSpeciesData();
+    fetchTypeData();
   }, [pokemon.id]);
 
   const handleReload = () => {
