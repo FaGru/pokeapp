@@ -24,7 +24,7 @@ export const DetailAbout: React.FC<{ pokemon: PokemonRootObject }> = ({
       setLoading(true);
       const { data }: any = await axios
         .get(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}/`)
-        .catch(error => {
+        .catch(() => {
           setLoading(false);
           setError(true);
         });
@@ -35,7 +35,7 @@ export const DetailAbout: React.FC<{ pokemon: PokemonRootObject }> = ({
       setLoading(true);
       const { data }: any = await axios
         .get(pokemon.types[0].type.url)
-        .catch(error => {
+        .catch(() => {
           setLoading(false);
           setError(true);
         });
@@ -45,7 +45,7 @@ export const DetailAbout: React.FC<{ pokemon: PokemonRootObject }> = ({
 
     fetchSpeciesData();
     fetchTypeData();
-  }, [pokemon.id]);
+  }, [pokemon.id, pokemon.types]);
 
   const handleReload = () => {
     window.location.reload();
@@ -71,8 +71,10 @@ export const DetailAbout: React.FC<{ pokemon: PokemonRootObject }> = ({
         </>
       ) : (
         <Container>
-          <p>{pokemonSpeciesDetails?.flavor_text_entries?.[6].flavor_text}</p>
-          <h4>Pokédex Data</h4>
+          <Description>
+            {pokemonSpeciesDetails?.flavor_text_entries?.[6].flavor_text}
+          </Description>
+          <Headline color={pokemon.types[0].type.name}>Pokédex Data</Headline>
           <InfoContainer>
             <Infobox>
               <p>Species</p>
@@ -105,16 +107,19 @@ export const DetailAbout: React.FC<{ pokemon: PokemonRootObject }> = ({
               <p>Weaknesses</p>
               {pokemonTypeDetails?.damage_relations.double_damage_from?.map(
                 type => (
-                  <img
+                  <SquareImage
                     key={type.name}
                     alt={type.name}
                     src={`./images/square-${type.name}.svg`}
                   />
                 )
               )}
-              {pokemonTypeDetails?.damage_relations.half_damage_to?.map(
+            </Infobox>
+            <Infobox>
+              <p>Strength</p>
+              {pokemonTypeDetails?.damage_relations.double_damage_to?.map(
                 type => (
-                  <img
+                  <SquareImage
                     key={type.name}
                     alt={type.name}
                     src={`./images/square-${type.name}.svg`}
@@ -133,13 +138,18 @@ export default DetailAbout;
 
 const Container = styled.div`
   padding: 40px;
-  h4 {
-    color: var(--font-color-grass);
-  }
+`;
+
+const Headline = styled.h4`
+  color: var(--font-color-${props => props.color});
+`;
+
+const Description = styled.p`
+  color: var(--font-color-grey);
 `;
 
 const InfoContainer = styled.div`
-  width: 300px;
+  width: 280px;
   p {
     color: var(--font-color-black);
     font-size: 0.75rem;
@@ -149,13 +159,18 @@ const InfoContainer = styled.div`
   span {
     align-items: flex-start;
     font-size: 0.9rem;
-    color: #747476;
+    color: var(--font-color-grey);
   }
 `;
 
 const Infobox = styled.div`
   display: flex;
 `;
+
+const SquareImage = styled.img`
+  margin-right: 5px;
+`;
+
 const LoadingContainer = styled.div`
   position: fixed;
   top: 50%;

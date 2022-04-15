@@ -67,9 +67,10 @@ export default DetailHeader;
 const ComponentContainer = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: 10% 1fr 10%;
+  grid-template-columns: 5vw 1fr 5vw;
   grid-template-rows: 40px auto auto;
   background-color: var(--card-color-${props => props.color});
+  overflow: hidden;
 `;
 const MainContainer = styled.div`
   grid-column: 2 / 3;
@@ -86,7 +87,7 @@ const InfoContainer = styled.div`
   h2 {
     margin: 5px;
     font-weight: bold;
-    color: var(--text-white);
+    color: var(--font-color-white);
     :first-letter {
       text-transform: capitalize;
     }
@@ -96,7 +97,7 @@ const InfoContainer = styled.div`
     gap: 5px;
   }
   p {
-    color: var(--text-number);
+    color: var(--font-color-number);
     margin: 0;
   }
 `;
@@ -116,8 +117,8 @@ const NavContainer = styled.div`
   margin: 20px;
 
   button {
-    color: var(--text-white);
-    width: 150px;
+    color: var(--font-color-white);
+    width: 80px;
     border: none;
     background: none;
     text-align: center;
@@ -147,7 +148,7 @@ const BackgroundName = styled.p`
   font-size: 100px;
   opacity: 25%;
   letter-spacing: 10px;
-  overflow: hidden;
+
   background: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 1) 40%,
@@ -161,6 +162,7 @@ const BackButton = styled.button`
   grid-column: 1 / 2;
   grid-row: 1 / 2;
   margin-top: 20px;
+  margin-left: 10px;
   background: none;
   border: none;
   cursor: pointer;

@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import DetailPage from './pages/DetailPage';
 import Home from './pages/Home';
+import { FetchErrorButton } from './components/Buttons';
 
 import { PokemonRootObject } from './interfaces/interfaces';
 import styled from 'styled-components';
@@ -31,7 +32,7 @@ const App: React.FC = () => {
           setLoading(false);
           setPokemonList(newData);
         })
-        .catch(error => {
+        .catch(() => {
           setLoading(false);
           setError(true);
         });
@@ -59,7 +60,7 @@ const App: React.FC = () => {
           <h3 style={{ color: 'red', margin: '5px' }}>
             Please reload there is an errror
           </h3>
-          <Button onClick={handleReload}>RELOAD</Button>
+          <FetchErrorButton onClick={handleReload}>RELOAD</FetchErrorButton>
         </>
       ) : (
         <Routes>
@@ -78,17 +79,6 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-const Button = styled.button`
-  border-radius: 10px;
-  background-color: red;
-  color: white;
-  place-items: center;
-  box-shadow: 1px 1px 2px 0 black;
-  margin: 5px;
-  padding: 3px;
-  cursor: pointer;
-`;
 
 const LoadingContainer = styled.div`
   position: fixed;

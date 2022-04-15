@@ -30,14 +30,30 @@ const GlobalStyle = createGlobalStyle`
 
     --card-color-gold: gold;
 
+    --font-color-normal: #9DA0AA;
     --font-color-grass: #62B957;
-    --font-color-grey: #747476;
-    --font-color-black: #17171B;
+    --font-color-poison: #A552CC;
+    --font-color-bug: #8CB230;
+    --font-color-fire: #FD7D24;
+    --font-color-water: #4A90DA;
+    --font-color-ice:#61CEC0;
+    --font-color-psychic: #EA5D60;
+    --font-color-ghost: #556AAE;
+    --font-color-electric: #EED535;
+    --font-color-rock: #BAAB82;
+    --font-color-fighting: #D04164;
+    --font-color-ground: #DD7748;
+    --font-color-dragon: #0F6AC0;
+    --font-color-fairy: #ED6EC7;
+    --font-color-dark: #58575F;
+    --font-color-flying: #748FC9;
+    --font-color-steel: #417D9A;
 
-    --text-white: #FFFFFF;
-    --text-black: #17171B;
-    --text-grey: #747476;
-    --text-number: rgba(23, 23, 27, 0.6);
+
+    --font-color-white: #FFFFFF;
+    --font-color-black: #17171B;
+    --font-color-grey: #747476;
+    --font-color-number: rgba(23, 23, 27, 0.6);
     
   }
 
