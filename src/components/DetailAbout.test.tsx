@@ -2,7 +2,11 @@ import DetailAbout from './DetailAbout';
 import { MemoryRouter } from 'react-router-dom';
 
 import { render, screen } from '@testing-library/react';
-import {testPokedetails, testPokemonSpeciesDetails, testPokemonTypeDetails } from './TestProps'
+import {
+  testPokedetails,
+  testPokemonSpeciesDetails,
+  testPokemonTypeDetails,
+} from './TestProps';
 
 describe('DetailAbout', () => {
   it('renders all type images', () => {

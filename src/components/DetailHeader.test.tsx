@@ -4,8 +4,6 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { testPokedetails } from './TestProps';
 
-
-
 const handleNavigate = jest.fn();
 describe('Header', () => {
   it('renders the images of the component', () => {

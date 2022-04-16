@@ -8,13 +8,14 @@ export const DetailAbout: React.FC<{
   pokemonTypeDetails: TypesPokemonRootObject | null;
   pokemonSpeciesDetails: SpeciesPokemonRootObject | null;
 }> = ({ pokemon, pokemonTypeDetails, pokemonSpeciesDetails }) => {
-
   return (
     <Container>
       <Description>
         {pokemonSpeciesDetails?.flavor_text_entries?.[6].flavor_text}
       </Description>
-      <Headline data-testid="about-headline" color={pokemon.types[0].type.name}>Pokédex Data</Headline>
+      <Headline data-testid="about-headline" color={pokemon.types[0].type.name}>
+        Pokédex Data
+      </Headline>
       <InfoContainer>
         <Infobox data-testid="infobox">
           <p>Species</p>
