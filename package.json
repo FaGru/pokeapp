@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@svgr/plugin-svgo": "^6.2.0",
     "@types/jest": "^27.4.1",
     "@types/node": "^16.11.26",
     "@types/styled-components": "^5.1.25",
@@ -49,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.16.7",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
@@ -56,7 +58,6 @@
     "@types/react-dom": "^18.0.1",
     "@types/react-router": "^5.1.18",
     "@types/react-router-dom": "^5.3.3",
-    "@babel/core": "^7.16.7",
     "babel-loader": "^8.2.3",
     "eslint": "^8.8.0",
     "eslint-config-prettier": "^8.3.0",
