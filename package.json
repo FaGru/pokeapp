@@ -23,14 +23,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test": "react-scripts test && npm run eslint && npm run htmlhint && npm run prettier:check",
+    "test": "npm run eslint && npm run htmlhint && npm run prettier:check",
     "prettier:check": "npx prettier --check .",
     "prettier:write": "npx prettier --write .",
     "htmlhint": "npx htmlhint '**/*.html'",
     "eslint": "eslint .",
     "eslint:write": "eslint --fix .",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
     "prepare": "husky install"
   },
   "eslintConfig": {
