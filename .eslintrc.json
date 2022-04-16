@@ -17,8 +17,7 @@
       "sourceType": "module"
   },
   "plugins": [
-      "react",
-      "typescript"
+      "react"
   ],
   "rules": {
      "react/react-in-jsx-scope": "off"
