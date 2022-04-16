@@ -2,26 +2,21 @@ import DetailHeader from '../components/DetailHeader';
 import DetailAbout from '../components/DetailAbout';
 
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 import { PokemonRootObject } from '../interfaces/interfaces';
 
 const DetailPage: React.FC<{ pokemon: PokemonRootObject }> = ({ pokemon }) => {
+  const navigate = useNavigate();
+
+  const handleNavigate: React.MouseEventHandler<HTMLButtonElement> = () => {
+    navigate('/');
+  };
+
   return (
     <DetailPageContainer>
-      <DetailHeader pokemon={pokemon} />
+      <DetailHeader pokemon={pokemon} handleNavigate={handleNavigate} />
       <DetailAbout pokemon={pokemon} />
-
-      {/* <p>Pokedex-ID: {pokemon.id}</p>
-        <h2>{pokemon.name}</h2>
-        <div>
-          Types:
-          {pokemon.types.map((types: Type) => (
-            <p key={nanoid()}>{types.type?.name}</p>
-          ))}
-        </div>
-        {pokemon.abilities.map(ability => (
-          <p>{ability.ability.name}</p>
-        ))} */}
     </DetailPageContainer>
   );
 };

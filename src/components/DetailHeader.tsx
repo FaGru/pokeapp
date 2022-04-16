@@ -1,20 +1,24 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+
 import { PokemonRootObject, Type } from '../interfaces/interfaces';
 import { useState } from 'react';
 import backArrow from '../images/back-arrow.svg';
 import backgroundPokeball from '../images/Background-Pokeball.svg';
 import points from '../images/points.svg';
 
-const DetailHeader: React.FC<{ pokemon: PokemonRootObject }> = ({
-  pokemon,
-}) => {
-  const navigate = useNavigate();
+const DetailHeader: React.FC<{
+  pokemon: PokemonRootObject;
+  handleNavigate: React.MouseEventHandler<HTMLButtonElement>;
+}> = ({ pokemon, handleNavigate }) => {
+  
   const [isShiny, setIsShiny] = useState<boolean>(false);
 
   return (
-    <ComponentContainer color={pokemon.types[0].type.name}>
-      <BackButton onClick={() => navigate('/', { replace: true })}>
+    <ComponentContainer
+      data-testid="component-container"
+      color={pokemon.types[0].type.name}
+    >
+      <BackButton onClick={handleNavigate} aria-label="back-button">
         <img src={backArrow} width="25px" height="25px" alt="back" />
       </BackButton>
       <MainContainer>
@@ -30,8 +34,8 @@ const DetailHeader: React.FC<{ pokemon: PokemonRootObject }> = ({
             height="150px"
           />
         </ImageContainer>
-        <InfoContainer>
-          <p>#{pokemon.order}</p>
+        <InfoContainer data-testid="infocontainer">
+          <p>#{pokemon.id}</p>
           <h2>{pokemon.name}</h2>
           <div>
             {pokemon.types.map((type: Type) => (
