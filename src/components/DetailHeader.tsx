@@ -10,7 +10,6 @@ const DetailHeader: React.FC<{
   pokemon: PokemonRootObject;
   handleNavigate: React.MouseEventHandler<HTMLButtonElement>;
 }> = ({ pokemon, handleNavigate }) => {
-  
   const [isShiny, setIsShiny] = useState<boolean>(false);
 
   return (

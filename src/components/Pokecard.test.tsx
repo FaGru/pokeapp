@@ -1,12 +1,12 @@
 import Pokecard from './Pokecard';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 import { render, screen } from '@testing-library/react';
 
 describe('Pokecard', () => {
   it('renders a Pokemon Card', () => {
     render(
-      <BrowserRouter>
+      <MemoryRouter>
         <Pokecard
           color="red"
           image="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png"
@@ -29,7 +29,7 @@ describe('Pokecard', () => {
             },
           ]}
         />
-      </BrowserRouter>
+      </MemoryRouter>
     );
     const imageElement = screen.getByAltText('turtok');
     const cardContainer = screen.getByTestId('card-container');

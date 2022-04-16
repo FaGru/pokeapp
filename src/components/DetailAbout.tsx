@@ -1,136 +1,74 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
 import { PokemonRootObject } from '../interfaces/interfaces';
 import { SpeciesPokemonRootObject } from '../interfaces/species_interface';
 import { TypesPokemonRootObject } from '../interfaces/types_interface';
 
-import axios from 'axios';
-import loadingSpinner from '../images/loadingSpinner.svg';
-import { FetchErrorButton } from './Buttons';
-
-export const DetailAbout: React.FC<{ pokemon: PokemonRootObject }> = ({
-  pokemon,
-}) => {
-  const [pokemonSpeciesDetails, setPokemonSpeciesDetails] =
-    useState<SpeciesPokemonRootObject | null>(null);
-
-  const [error, setError] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [pokemonTypeDetails, setPokemonTypeDetails] =
-    useState<TypesPokemonRootObject | null>(null);
-
-  useEffect(() => {
-    const fetchSpeciesData = async () => {
-      setLoading(true);
-      const { data }: any = await axios
-        .get(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}/`)
-        .catch(() => {
-          setLoading(false);
-          setError(true);
-        });
-      setPokemonSpeciesDetails(data);
-    };
-
-    const fetchTypeData = async () => {
-      setLoading(true);
-      const { data }: any = await axios
-        .get(pokemon.types[0].type.url)
-        .catch(() => {
-          setLoading(false);
-          setError(true);
-        });
-      setLoading(false);
-      setPokemonTypeDetails(data);
-    };
-
-    fetchSpeciesData();
-    fetchTypeData();
-  }, [pokemon.id, pokemon.types]);
-
-  const handleReload = () => {
-    window.location.reload();
-    setError(false);
-  };
-
-  if (loading === true) {
-    return (
-      <LoadingContainer>
-        <img src={loadingSpinner} alt="loading..." height="80" width="80"></img>
-      </LoadingContainer>
-    );
-  }
+export const DetailAbout: React.FC<{
+  pokemon: PokemonRootObject;
+  pokemonTypeDetails: TypesPokemonRootObject | null;
+  pokemonSpeciesDetails: SpeciesPokemonRootObject | null;
+}> = ({ pokemon, pokemonTypeDetails, pokemonSpeciesDetails }) => {
 
   return (
-    <>
-      {error ? (
-        <>
-          <h3 style={{ color: 'red', margin: '5px' }}>
-            Please reload there is an errror
-          </h3>
-          <FetchErrorButton onClick={handleReload}>RELOAD</FetchErrorButton>
-        </>
-      ) : (
-        <Container>
-          <Description>
-            {pokemonSpeciesDetails?.flavor_text_entries?.[6].flavor_text}
-          </Description>
-          <Headline color={pokemon.types[0].type.name}>Pokédex Data</Headline>
-          <InfoContainer>
-            <Infobox>
-              <p>Species</p>
-              <p>
-                <span>{pokemonSpeciesDetails?.genera[7].genus}</span>
-              </p>
-            </Infobox>
-            <Infobox>
-              <p>Height </p>
-              <p>
-                <span>{pokemon.height / 10}m </span>
-              </p>
-            </Infobox>
-            <Infobox>
-              <p>Weight </p>
-              <p>
-                <span>{pokemon.weight}kg</span>
-              </p>
-            </Infobox>
-            <Infobox>
-              <p>Abilities</p>
-              <p>
-                <span>
-                  {pokemon.abilities[0].ability.name} <br />
-                  {pokemon.abilities[1]?.ability.name}
-                </span>
-              </p>
-            </Infobox>
-            <Infobox>
-              <p>Weaknesses</p>
-              {pokemonTypeDetails?.damage_relations.double_damage_from?.map(
-                type => (
-                  <SquareImage
-                    key={type.name}
-                    alt={type.name}
-                    src={`./images/square-${type.name}.svg`}
-                  />
-                )
-              )}
-            </Infobox>
-            <Infobox>
-              <p>Strength</p>
-              {pokemonTypeDetails?.damage_relations.double_damage_to?.map(
-                type => (
-                  <SquareImage
-                    key={type.name}
-                    alt={type.name}
-                    src={`./images/square-${type.name}.svg`}
-                  />
-                )
-              )}
-            </Infobox>
-          </InfoContainer>
-        </Container>
-      )}
-    </>
+    <Container>
+      <Description>
+        {pokemonSpeciesDetails?.flavor_text_entries?.[6].flavor_text}
+      </Description>
+      <Headline data-testid="about-headline" color={pokemon.types[0].type.name}>Pokédex Data</Headline>
+      <InfoContainer>
+        <Infobox data-testid="infobox">
+          <p>Species</p>
+          <p>
+            <span>{pokemonSpeciesDetails?.genera[7].genus}</span>
+          </p>
+        </Infobox>
+        <Infobox data-testid="infobox">
+          <p>Height </p>
+          <p>
+            <span>{pokemon.height / 10}m </span>
+          </p>
+        </Infobox>
+        <Infobox data-testid="infobox">
+          <p>Weight </p>
+          <p>
+            <span>{pokemon.weight}kg</span>
+          </p>
+        </Infobox>
+        <Infobox data-testid="infobox">
+          <p>Abilities</p>
+          <p>
+            <span>
+              {pokemon.abilities[0].ability.name} <br />
+              {pokemon.abilities[1]?.ability.name}
+            </span>
+          </p>
+        </Infobox>
+        <Infobox data-testid="infobox">
+          <p>Weaknesses</p>
+          {pokemonTypeDetails?.damage_relations.double_damage_from?.map(
+            type => (
+              <SquareImage
+                key={type.name}
+                alt={type.name}
+                src={`./images/square-${type.name}.svg`}
+                data-testid="square-image"
+              />
+            )
+          )}
+        </Infobox>
+        <Infobox data-testid="infobox">
+          <p>Strength</p>
+          {pokemonTypeDetails?.damage_relations.double_damage_to?.map(type => (
+            <SquareImage
+              data-testid="square-image"
+              key={type.name}
+              alt={type.name}
+              src={`./images/square-${type.name}.svg`}
+            />
+          ))}
+        </Infobox>
+      </InfoContainer>
+    </Container>
   );
 };
 
@@ -169,14 +107,4 @@ const Infobox = styled.div`
 
 const SquareImage = styled.img`
   margin-right: 5px;
-`;
-
-const LoadingContainer = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transform: -webkit-translate(-50%, -50%);
-  transform: -moz-translate(-50%, -50%);
-  transform: -ms-translate(-50%, -50%);
 `;
