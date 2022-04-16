@@ -9,6 +9,12 @@
       "plugin:react/recommended",
       "plugin:prettier/recommended"
   ],
+  "prettier/prettier": [
+    "error",
+    {
+        "parser": "typescript"
+    }
+],
   "parserOptions": {
       "ecmaFeatures": {
           "jsx": true
