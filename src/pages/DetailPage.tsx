@@ -1,65 +1,103 @@
-import { useNavigate } from 'react-router-dom';
-import { nanoid } from 'nanoid';
+import DetailHeader from '../components/DetailHeader';
+import DetailAbout from '../components/DetailAbout';
+import { FetchErrorButton } from '../components/Buttons';
+import loadingSpinner from '../images/loadingSpinner.svg';
+
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-import { RootObject, Type } from '../interfaces/interfaces';
+import { PokemonRootObject } from '../interfaces/interfaces';
+import { SpeciesPokemonRootObject } from '../interfaces/species_interface';
+import { TypesPokemonRootObject } from '../interfaces/types_interface';
 
-const DetailPage: React.FC<{ pokemon: RootObject }> = ({ pokemon }) => {
+const DetailPage: React.FC<{ pokemon: PokemonRootObject }> = ({ pokemon }) => {
   const navigate = useNavigate();
-  const [isShiny, setIsShiny] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  console.log('in Detail page', pokemon);
+  const handleNavigate: React.MouseEventHandler<HTMLButtonElement> = () => {
+    navigate('/');
+  };
+
+  const [pokemonSpeciesDetails, setPokemonSpeciesDetails] =
+    useState<SpeciesPokemonRootObject | null>(null);
+  const [pokemonTypeDetails, setPokemonTypeDetails] =
+    useState<TypesPokemonRootObject | null>(null);
+
+  const [error, setError] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchSpeciesData = async () => {
+      setLoading(true);
+      const { data }: any = await axios
+        .get(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}/`)
+        .catch(() => {
+          setLoading(false);
+          setError(true);
+        });
+      setPokemonSpeciesDetails(data);
+    };
+
+    const fetchTypeData = async () => {
+      setLoading(true);
+      const { data }: any = await axios
+        .get(pokemon.types[0].type.url)
+        .catch(() => {
+          setLoading(false);
+          setError(true);
+        });
+      setLoading(false);
+      setPokemonTypeDetails(data);
+    };
+
+    fetchSpeciesData();
+    fetchTypeData();
+  }, [pokemon.id, pokemon.types]);
+
+  const handleReload = () => {
+    window.location.reload();
+    setError(false);
+  };
+
+  if (loading === true) {
+    return (
+      <LoadingContainer>
+        <img src={loadingSpinner} alt="loading..." height="80" width="80"></img>
+      </LoadingContainer>
+    );
+  }
 
   return (
     <>
-      <button onClick={() => navigate('/', { replace: true })}>back</button>
-      <DetailContainer color={pokemon.types[0].type.name}>
-        <p>Pokedex-ID: {pokemon.id}</p>
-        <h2>{pokemon.name}</h2>
+      {error ? (
+        <>
+          <h3 style={{ color: 'red', margin: '5px' }}>
+            Please reload there is an errror
+          </h3>
+          <FetchErrorButton onClick={handleReload}>RELOAD</FetchErrorButton>
+        </>
+      ) : (
         <div>
-          Types:
-          {pokemon.types.map((types: Type) => (
-            <p key={nanoid()}>{types.type?.name}</p>
-          ))}
-        </div>
-        {pokemon.abilities.map(ability => (
-          <p>{ability.ability.name}</p>
-        ))}
-        <ImageContainer onClick={() => setIsShiny(!isShiny)}>
-          <img
-            src={
-              isShiny
-                ? pokemon.sprites.other.home.front_shiny
-                : pokemon.sprites.other.home.front_default
-            }
-            alt={pokemon.name}
-            width="150px;"
-            height="150px"
+          <DetailHeader pokemon={pokemon} handleNavigate={handleNavigate} />
+          <DetailAbout
+            pokemon={pokemon}
+            pokemonTypeDetails={pokemonTypeDetails}
+            pokemonSpeciesDetails={pokemonSpeciesDetails}
           />
-        </ImageContainer>
-      </DetailContainer>
+        </div>
+      )}
     </>
   );
 };
 export default DetailPage;
 
-const DetailContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-  text-align: center;
-  background-color: var(--card-color-${props => props.color});
-  border-radius: 10px;
-
-  max-width: 1200px;
-`;
-const ImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  background-color: black;
-  cursor: pointer;
-  max-width: 200px;
-  grid-column: 2 / 3;
-  grid-row: 5 / 6;
+const LoadingContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform: -webkit-translate(-50%, -50%);
+  transform: -moz-translate(-50%, -50%);
+  transform: -ms-translate(-50%, -50%);
 `;

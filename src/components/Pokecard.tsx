@@ -16,7 +16,7 @@ const Pokecard: React.FC<PokecardProps> = ({
     <CardContainer
       data-testid="card-container"
       color={color}
-      onClick={() => navigate(`/pokemon-${number}`, { replace: true })}
+      onClick={() => navigate(`/${name}`)}
     >
       <PokedexID>{number}</PokedexID>
       <PokemonName>{name[0].toUpperCase() + name.slice(1)}</PokemonName>

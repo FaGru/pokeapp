@@ -314,7 +314,7 @@ export interface Type {
   type?: Type2;
 }
 
-export interface RootObject {
+export interface PokemonRootObject {
   abilities: Ability[];
   base_experience: number;
   forms: Form[];
