@@ -1,0 +1,5 @@
+{
+  "*": "prettier --ignore-unknown --write",
+  "*.js": "eslint",
+  "*.html": ["htmlhint"]
+}

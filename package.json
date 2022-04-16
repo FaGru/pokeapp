@@ -19,8 +19,16 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test": "react-scripts test && npm run eslint && npm run htmlhint && npm run prettier:check",
+    "prettier:check": "npx prettier --check .",
+    "prettier:write": "npx prettier --write .",
+    "htmlhint": "npx htmlhint '**/*.html'",
+    "eslint": "eslint .",
+    "eslint:write": "eslint --fix .",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +55,14 @@
     "@types/react": "^18.0.5",
     "@types/react-dom": "^18.0.1",
     "@types/react-router": "^5.1.18",
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-router-dom": "^5.3.3",
+    "@babel/core": "^7.16.7",
+    "babel-loader": "^8.2.3",
+    "eslint": "^8.8.0",
+    "eslint-config-prettier": "^8.3.0",
+    "htmlhint": "^1.1.1",
+    "husky": "^7.0.0",
+    "lint-staged": "^12.3.2",
+    "prettier": "2.5.1"
   }
 }
