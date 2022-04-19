@@ -15,7 +15,7 @@ const App: React.FC = () => {
   const [pokemonList, setPokemonList] = useState<PokemonRootObject[]>([]);
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-
+  config;
   useEffect(() => {
     setLoading(true);
     const fetchPokemon = async () => {
