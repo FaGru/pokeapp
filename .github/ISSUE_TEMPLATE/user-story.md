@@ -1,9 +1,9 @@
 ---
 name: User Story
 about: A classical user story template
-title: ""
+title: ''
 labels: enhancement
-assignees: ""
+assignees: ''
 ---
 
 ## Value proposition

@@ -1,5 +1,6 @@
-import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import styled from 'styled-components';
 import axios from 'axios';
 
 import DetailPage from './pages/DetailPage';
@@ -7,7 +8,6 @@ import Home from './pages/Home';
 import { FetchErrorButton } from './components/Buttons';
 
 import { PokemonRootObject } from './interfaces/interfaces';
-import styled from 'styled-components';
 
 import loadingSpinner from './images/loadingSpinner.svg';
 
@@ -15,7 +15,6 @@ const App: React.FC = () => {
   const [pokemonList, setPokemonList] = useState<PokemonRootObject[]>([]);
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-
   useEffect(() => {
     setLoading(true);
     const fetchPokemon = async () => {
