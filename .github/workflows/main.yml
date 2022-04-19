@@ -29,5 +29,7 @@ jobs:
         run: npm ci
       - name: test
         run: npm test -- --passWithNoTests
+      - name: check-tests
+        run: npm test
       - name: format
         run: npm run test-all
