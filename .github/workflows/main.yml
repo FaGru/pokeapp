@@ -23,14 +23,12 @@ jobs:
       - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
-        node-version: 16.x
+          node-version: 16.x
 
       - name: npm ci
         run: npm ci
       - name: test
         run: npm test -- --passWithNoTests
-      - name: run tests
-        run: npm test
      - name: format
         run: npm run check-format
      - name: lint
