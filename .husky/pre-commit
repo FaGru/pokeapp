@@ -30,9 +30,5 @@ npm run check-types ||
 )
 
 # If everything passes... Now we can commit
-echo '🤔 Code looks good to me... Trying to build now.'
-
-
-# If everything passes... Now we can commit
 echo '✅ I am committing this now.'
 
