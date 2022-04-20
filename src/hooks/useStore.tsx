@@ -6,36 +6,30 @@ import { TypesPokemonRootObject } from '../interfaces/types_interface';
 
 interface pokeInterfaces {
   pokemonList: PokemonRootObject[];
-  pokemonSpeciesDetails: SpeciesPokemonRootObject[];
-  pokemonTypeDetails: SpeciesPokemonRootObject[];
+  pokemonSpeciesDetails: SpeciesPokemonRootObject | null;
+  pokemonTypeDetails: TypesPokemonRootObject | null;
   data: [];
-  loading: boolean;
+  loadingPokemon: boolean;
+  loadingSpecies: boolean;
+  loadingTypes: boolean;
   error: boolean;
   setPokemonList: () => Promise<void>;
+  fetchSpeciesData: (arg0: number) => Promise<void>;
+  fetchTypeData: (arg0: string) => Promise<void>;
 }
-
-const initialize = (): {
-  data: [] | null;
-  loading: boolean;
-  error: boolean;
-} => {
-  return {
-    data: null,
-    loading: false,
-    error: false,
-  };
-};
 
 const useStore = create<pokeInterfaces>((set, get) => ({
   pokemonList: [],
-  pokemonSpeciesDetails: [],
-  pokemonTypeDetails: [],
+  pokemonSpeciesDetails: null,
+  pokemonTypeDetails: null,
   data: [],
-  loading: false,
+  loadingPokemon: false,
+  loadingSpecies: false,
+  loadingTypes: false,
   error: false,
 
   setPokemonList: async () => {
-    set({ loading: true });
+    set({ loadingPokemon: true });
     let urlList: string[] = [];
     for (let i = 1; i <= 150; i++) {
       urlList = [...urlList, `https://pokeapi.co/api/v2/pokemon/${i}`];
@@ -46,13 +40,35 @@ const useStore = create<pokeInterfaces>((set, get) => ({
         responses.forEach((response: any) => {
           newData = [...newData, response.data];
         });
-        set({ loading: false });
+        set({ loadingPokemon: false });
         set({ pokemonList: newData });
       })
       .catch(() => {
-        set({ loading: false });
+        set({ loadingPokemon: false });
         set({ error: true });
       });
+  },
+
+  fetchSpeciesData: async (pokemonId: number) => {
+    set({ loadingSpecies: true });
+    const { data }: any = await axios
+      .get(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}/`)
+      .catch(() => {
+        set({ loadingSpecies: false });
+        set({ error: true });
+      });
+    set({ loadingSpecies: false });
+    set({ pokemonSpeciesDetails: data });
+  },
+
+  fetchTypeData: async (pokemonTypesUrl: string) => {
+    set({ loadingTypes: true });
+    const { data }: any = await axios.get(pokemonTypesUrl).catch(() => {
+      set({ loadingTypes: false });
+      set({ error: true });
+    });
+    set({ loadingTypes: false });
+    set({ pokemonTypeDetails: data });
   },
 }));
 export default useStore;

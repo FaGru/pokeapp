@@ -18,16 +18,12 @@ const App: React.FC = () => {
     state => state.setPokemonList
   );
   const error = useStore<boolean>(state => state.error);
-  const loading = useStore<boolean>(state => state.loading);
+  const loadingPokemon = useStore<boolean>(state => state.loadingPokemon);
   useEffect(() => {
     setPokemonList();
   }, []);
 
-  const handleReload = () => {
-    window.location.reload();
-  };
-
-  if (loading === true) {
+  if (loadingPokemon === true) {
     return (
       <LoadingContainer>
         <img src={loadingSpinner} alt="loading..." height="80" width="80"></img>
@@ -42,11 +38,13 @@ const App: React.FC = () => {
           <h3 style={{ color: 'red', margin: '5px' }}>
             Please reload there is an errror
           </h3>
-          <FetchErrorButton onClick={handleReload}>RELOAD</FetchErrorButton>
+          <FetchErrorButton onClick={() => window.location.reload()}>
+            RELOAD
+          </FetchErrorButton>
         </>
       ) : (
         <Routes>
-          <Route path="/" element={<Home pokemonList={pokemonList} />} />
+          <Route path="/" element={<Home />} />
           {pokemonList?.map(pokemon => (
             <Route
               key={pokemon.id}
