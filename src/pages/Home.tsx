@@ -4,10 +4,11 @@ import styled from 'styled-components';
 import { PokemonRootObject } from '../interfaces/interfaces';
 
 import Pokecard from '../components/Pokecard';
+import useStore from '../hooks/useStore';
 
-const Test: React.FC<{ pokemonList: PokemonRootObject[] }> = ({
-  pokemonList,
-}) => {
+const Test: React.FC = () => {
+  const pokemonList = useStore<PokemonRootObject[]>(state => state.pokemonList);
+
   return (
     <PokemonContainer>
       {pokemonList?.map(pokemon => (
