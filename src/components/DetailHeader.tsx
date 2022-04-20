@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import useStore from '../hooks/useStore';
 
 import { PokemonRootObject, Type } from '../interfaces/interfaces';
 import { useState } from 'react';
@@ -11,6 +12,14 @@ const DetailHeader: React.FC<{
   handleNavigate: React.MouseEventHandler<HTMLButtonElement>;
 }> = ({ pokemon, handleNavigate }) => {
   const [isShiny, setIsShiny] = useState<boolean>(false);
+  const setActiveDetailComponent = useStore(
+    state => state.setActiveDetailComponent
+  );
+
+  const handleActiveComponent = (event: any) => {
+    console.log(event.target.innerText);
+    setActiveDetailComponent(event.target.innerText);
+  };
 
   return (
     <ComponentContainer
@@ -48,9 +57,9 @@ const DetailHeader: React.FC<{
         </InfoContainer>
       </MainContainer>
       <NavContainer>
-        <button>About</button>
-        <button>Stats</button>
-        <button>Evolution</button>
+        <button onClick={handleActiveComponent}>About</button>
+        <button onClick={handleActiveComponent}>Stats</button>
+        <button onClick={handleActiveComponent}>Evolution</button>
       </NavContainer>
       <PokeballImg
         src={backgroundPokeball}
@@ -126,6 +135,7 @@ const NavContainer = styled.div`
     background: none;
     text-align: center;
     cursor: pointer;
+    z-index: 5;
   }
 `;
 

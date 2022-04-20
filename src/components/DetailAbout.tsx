@@ -13,69 +13,83 @@ export const DetailAbout: React.FC<{
   const pokemonSpeciesDetails = useStore<SpeciesPokemonRootObject | null>(
     state => state.pokemonSpeciesDetails
   );
+  const activeDetailComponent = useStore<string>(
+    state => state.activeDetailComponent
+  );
 
   return (
-    <Container>
-      <Description>
-        {pokemonSpeciesDetails?.flavor_text_entries?.[6].flavor_text}
-      </Description>
-      <Headline data-testid="about-headline" color={pokemon.types[0].type.name}>
-        Pokédex Data
-      </Headline>
-      <InfoContainer>
-        <Infobox data-testid="infobox">
-          <p>Species</p>
-          <p>
-            <span>{pokemonSpeciesDetails?.genera[7].genus}</span>
-          </p>
-        </Infobox>
-        <Infobox data-testid="infobox">
-          <p>Height </p>
-          <p>
-            <span>{pokemon.height / 10}m </span>
-          </p>
-        </Infobox>
-        <Infobox data-testid="infobox">
-          <p>Weight </p>
-          <p>
-            <span>{pokemon.weight}kg</span>
-          </p>
-        </Infobox>
-        <Infobox data-testid="infobox">
-          <p>Abilities</p>
-          <p>
-            <span>
-              {pokemon.abilities[0].ability.name} <br />
-              {pokemon.abilities[1]?.ability.name}
-            </span>
-          </p>
-        </Infobox>
-        <Infobox data-testid="infobox">
-          <p>Weaknesses</p>
-          {pokemonTypeDetails?.damage_relations.double_damage_from?.map(
-            type => (
-              <SquareImage
-                key={type.name}
-                alt={type.name}
-                src={`./images/square-${type.name}.svg`}
-                data-testid="square-image"
-              />
-            )
-          )}
-        </Infobox>
-        <Infobox data-testid="infobox">
-          <p>Strength</p>
-          {pokemonTypeDetails?.damage_relations.double_damage_to?.map(type => (
-            <SquareImage
-              data-testid="square-image"
-              key={type.name}
-              alt={type.name}
-              src={`./images/square-${type.name}.svg`}
-            />
-          ))}
-        </Infobox>
-      </InfoContainer>
-    </Container>
+    <>
+      {activeDetailComponent === 'About' ? (
+        <Container>
+          <Description>
+            {pokemonSpeciesDetails?.flavor_text_entries?.[6].flavor_text}
+          </Description>
+          <Headline
+            data-testid="about-headline"
+            color={pokemon.types[0].type.name}
+          >
+            Pokédex Data
+          </Headline>
+          <InfoContainer>
+            <Infobox data-testid="infobox">
+              <p>Species</p>
+              <p>
+                <span>{pokemonSpeciesDetails?.genera[7].genus}</span>
+              </p>
+            </Infobox>
+            <Infobox data-testid="infobox">
+              <p>Height </p>
+              <p>
+                <span>{pokemon.height / 10}m </span>
+              </p>
+            </Infobox>
+            <Infobox data-testid="infobox">
+              <p>Weight </p>
+              <p>
+                <span>{pokemon.weight}kg</span>
+              </p>
+            </Infobox>
+            <Infobox data-testid="infobox">
+              <p>Abilities</p>
+              <p>
+                <span>
+                  {pokemon.abilities[0].ability.name} <br />
+                  {pokemon.abilities[1]?.ability.name}
+                </span>
+              </p>
+            </Infobox>
+            <Infobox data-testid="infobox">
+              <p>Weaknesses</p>
+              {pokemonTypeDetails?.damage_relations.double_damage_from?.map(
+                type => (
+                  <SquareImage
+                    key={type.name}
+                    alt={type.name}
+                    src={`./images/square-${type.name}.svg`}
+                    data-testid="square-image"
+                  />
+                )
+              )}
+            </Infobox>
+            <Infobox data-testid="infobox">
+              <p>Strength</p>
+              {pokemonTypeDetails?.damage_relations.double_damage_to?.map(
+                type => (
+                  <SquareImage
+                    data-testid="square-image"
+                    key={type.name}
+                    alt={type.name}
+                    src={`./images/square-${type.name}.svg`}
+                  />
+                )
+              )}
+            </Infobox>
+          </InfoContainer>
+        </Container>
+      ) : (
+        ''
+      )}
+    </>
   );
 };
 

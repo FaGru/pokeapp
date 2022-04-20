@@ -13,9 +13,11 @@ interface pokeInterfaces {
   loadingSpecies: boolean;
   loadingTypes: boolean;
   error: boolean;
+  activeDetailComponent: string;
   setPokemonList: () => Promise<void>;
   fetchSpeciesData: (arg0: number) => Promise<void>;
   fetchTypeData: (arg0: string) => Promise<void>;
+  setActiveDetailComponent: (arg0: string) => void;
 }
 
 const useStore = create<pokeInterfaces>((set, get) => ({
@@ -27,6 +29,7 @@ const useStore = create<pokeInterfaces>((set, get) => ({
   loadingSpecies: false,
   loadingTypes: false,
   error: false,
+  activeDetailComponent: 'About',
 
   setPokemonList: async () => {
     set({ loadingPokemon: true });
@@ -69,6 +72,9 @@ const useStore = create<pokeInterfaces>((set, get) => ({
     });
     set({ loadingTypes: false });
     set({ pokemonTypeDetails: data });
+  },
+  setActiveDetailComponent: (activeNavButton: string) => {
+    set({ activeDetailComponent: activeNavButton });
   },
 }));
 export default useStore;

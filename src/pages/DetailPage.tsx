@@ -1,5 +1,6 @@
 import DetailHeader from '../components/DetailHeader';
 import DetailAbout from '../components/DetailAbout';
+import DetailStats from '../components/DetailStats';
 import { FetchErrorButton } from '../components/Buttons';
 import loadingSpinner from '../images/loadingSpinner.svg';
 
@@ -62,6 +63,7 @@ const DetailPage: React.FC<{ pokemon: PokemonRootObject }> = ({ pokemon }) => {
         <div>
           <DetailHeader pokemon={pokemon} handleNavigate={handleNavigate} />
           <DetailAbout pokemon={pokemon} />
+          <DetailStats pokemon={pokemon} />
         </div>
       )}
     </>
