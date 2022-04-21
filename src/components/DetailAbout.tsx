@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { PokemonRootObject } from '../interfaces/interfaces';
+import { PokemonRootObject } from '../interfaces/pokemon_interface';
 import { SpeciesPokemonRootObject } from '../interfaces/species_interface';
 import { TypesPokemonRootObject } from '../interfaces/types_interface';
 import useStore from '../hooks/useStore';
@@ -86,9 +86,7 @@ export const DetailAbout: React.FC<{
             </Infobox>
           </InfoContainer>
         </Container>
-      ) : (
-        ''
-      )}
+      ) : null}
     </>
   );
 };

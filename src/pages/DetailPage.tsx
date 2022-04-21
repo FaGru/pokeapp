@@ -1,17 +1,16 @@
 import DetailHeader from '../components/DetailHeader';
 import DetailAbout from '../components/DetailAbout';
 import DetailStats from '../components/DetailStats';
+import DetailEvolution from '../components/DetailEvolution';
 import { FetchErrorButton } from '../components/Buttons';
 import loadingSpinner from '../images/loadingSpinner.svg';
 
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
 
-import { PokemonRootObject } from '../interfaces/interfaces';
+import { PokemonRootObject } from '../interfaces/pokemon_interface';
 import { SpeciesPokemonRootObject } from '../interfaces/species_interface';
-import { TypesPokemonRootObject } from '../interfaces/types_interface';
 
 import useStore from '../hooks/useStore';
 
@@ -22,25 +21,35 @@ const DetailPage: React.FC<{ pokemon: PokemonRootObject }> = ({ pokemon }) => {
     navigate('/');
   };
 
-  const pokemonTypeDetails = useStore<TypesPokemonRootObject | null>(
-    state => state.pokemonTypeDetails
-  );
-  const pokemonSpeciesDetails = useStore<SpeciesPokemonRootObject | null>(
-    state => state.pokemonSpeciesDetails
-  );
   const fetchSpeciesData = useStore(state => state.fetchSpeciesData);
-
   const fetchTypeData = useStore(state => state.fetchTypeData);
-  const loadingSpecies = useStore<boolean>(state => state.loadingSpecies);
-  const loadingTypes = useStore<boolean>(state => state.loadingTypes);
-  const error = useStore<boolean>(state => state.error);
+  const fetchEvoltionData = useStore(state => state.fetchEvolutionData);
+
+  const {
+    loadingSpecies,
+    loadingTypes,
+    loadingEvolution,
+    error,
+    pokemonSpeciesDetails,
+  } = useStore<{
+    loadingSpecies: boolean;
+    loadingTypes: boolean;
+    loadingEvolution: boolean;
+    pokemonSpeciesDetails: SpeciesPokemonRootObject | null;
+    error: boolean;
+  }>(state => state);
 
   useEffect(() => {
     fetchSpeciesData(pokemon.id);
     fetchTypeData(pokemon.types[0].type.url);
   }, []);
+  useEffect(() => {
+    if (pokemonSpeciesDetails) {
+      fetchEvoltionData(pokemonSpeciesDetails.evolution_chain.url);
+    }
+  }, [pokemonSpeciesDetails]);
 
-  if (loadingSpecies || loadingTypes) {
+  if (loadingSpecies || loadingTypes || loadingEvolution) {
     return (
       <LoadingContainer>
         <img src={loadingSpinner} alt="loading..." height="80" width="80"></img>
@@ -64,6 +73,7 @@ const DetailPage: React.FC<{ pokemon: PokemonRootObject }> = ({ pokemon }) => {
           <DetailHeader pokemon={pokemon} handleNavigate={handleNavigate} />
           <DetailAbout pokemon={pokemon} />
           <DetailStats pokemon={pokemon} />
+          <DetailEvolution pokemon={pokemon} />
         </div>
       )}
     </>

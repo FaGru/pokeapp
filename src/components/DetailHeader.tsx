@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import useStore from '../hooks/useStore';
 
-import { PokemonRootObject, Type } from '../interfaces/interfaces';
+import { PokemonRootObject, Type } from '../interfaces/pokemon_interface';
 import { useState } from 'react';
 import backArrow from '../images/back-arrow.svg';
 import backgroundPokeball from '../images/Background-Pokeball.svg';
@@ -17,7 +17,6 @@ const DetailHeader: React.FC<{
   );
 
   const handleActiveComponent = (event: any) => {
-    console.log(event.target.innerText);
     setActiveDetailComponent(event.target.innerText);
   };
 
@@ -115,7 +114,7 @@ const InfoContainer = styled.div`
 `;
 const ImageContainer = styled.div`
   cursor: pointer;
-  position: relative;
+
   grid-column: 1 / 2;
   justify-self: center;
   margin-right: 10px;
@@ -168,7 +167,7 @@ const BackgroundName = styled.p`
     rgba(0, 0, 0, 0) 80%
   );
   -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
+  background-clip: text;
 `;
 
 const BackButton = styled.button`

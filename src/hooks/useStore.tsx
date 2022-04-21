@@ -1,22 +1,25 @@
 import create from 'zustand';
 import axios from 'axios';
-import { PokemonRootObject } from '../interfaces/interfaces';
+import { PokemonRootObject } from '../interfaces/pokemon_interface';
 import { SpeciesPokemonRootObject } from '../interfaces/species_interface';
 import { TypesPokemonRootObject } from '../interfaces/types_interface';
+import { EvolutionRootObject } from '../interfaces/evolution_interface';
 
 interface pokeInterfaces {
   pokemonList: PokemonRootObject[];
   pokemonSpeciesDetails: SpeciesPokemonRootObject | null;
   pokemonTypeDetails: TypesPokemonRootObject | null;
-  data: [];
+  pokemonEvolutionChain: EvolutionRootObject | null;
   loadingPokemon: boolean;
   loadingSpecies: boolean;
   loadingTypes: boolean;
+  loadingEvolution: boolean;
   error: boolean;
   activeDetailComponent: string;
-  setPokemonList: () => Promise<void>;
+  fetchPokemonList: () => Promise<void>;
   fetchSpeciesData: (arg0: number) => Promise<void>;
   fetchTypeData: (arg0: string) => Promise<void>;
+  fetchEvolutionData: (arg0: string) => Promise<void>;
   setActiveDetailComponent: (arg0: string) => void;
 }
 
@@ -24,14 +27,15 @@ const useStore = create<pokeInterfaces>((set, get) => ({
   pokemonList: [],
   pokemonSpeciesDetails: null,
   pokemonTypeDetails: null,
-  data: [],
+  pokemonEvolutionChain: null,
   loadingPokemon: false,
   loadingSpecies: false,
   loadingTypes: false,
+  loadingEvolution: false,
   error: false,
   activeDetailComponent: 'About',
 
-  setPokemonList: async () => {
+  fetchPokemonList: async () => {
     set({ loadingPokemon: true });
     let urlList: string[] = [];
     for (let i = 1; i <= 150; i++) {
@@ -73,8 +77,17 @@ const useStore = create<pokeInterfaces>((set, get) => ({
     set({ loadingTypes: false });
     set({ pokemonTypeDetails: data });
   },
-  setActiveDetailComponent: (activeNavButton: string) => {
-    set({ activeDetailComponent: activeNavButton });
+  fetchEvolutionData: async (url: string) => {
+    set({ loadingEvolution: true });
+    const { data }: any = await axios.get(url).catch(() => {
+      set({ loadingEvolution: false });
+      set({ error: true });
+    });
+    set({ loadingEvolution: false });
+    set({ pokemonEvolutionChain: data });
+  },
+  setActiveDetailComponent: (activeDetailNavButton: string) => {
+    set({ activeDetailComponent: activeDetailNavButton });
   },
 }));
 export default useStore;

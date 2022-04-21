@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { nanoid } from 'nanoid';
 import { useNavigate } from 'react-router-dom';
 
-import { PokecardProps } from '../interfaces/interfaces';
+import { PokecardProps } from '../interfaces/pokemon_interface';
 
 const Pokecard: React.FC<PokecardProps> = ({
   name,
