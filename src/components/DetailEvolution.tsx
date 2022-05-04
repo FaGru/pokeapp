@@ -66,6 +66,7 @@ const DetailEvolution: React.FC<{ pokemon: PokemonRootObject }> = ({
                     alt={pokemon.name}
                     width="100px"
                     height="100px"
+                    data-testid="pokemon-img"
                   />
                 </ImageContainer>
               )
@@ -91,6 +92,7 @@ const Container = styled.div`
 `;
 const Headline = styled.h4`
   color: var(--font-color-${props => props.color});
+  text-align: center;
 `;
 
 const PokemonImg = styled.img`
