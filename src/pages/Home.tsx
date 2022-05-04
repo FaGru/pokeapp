@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { PokemonRootObject } from '../interfaces/interfaces';
+import { PokemonRootObject } from '../interfaces/pokemon_interface';
 
 import Pokecard from '../components/Pokecard';
 import useStore from '../hooks/useStore';

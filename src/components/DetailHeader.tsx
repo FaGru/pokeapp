@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import useStore from '../hooks/useStore';
 
-import { PokemonRootObject, Type } from '../interfaces/interfaces';
+import { PokemonRootObject, Type } from '../interfaces/pokemon_interface';
 import { useState } from 'react';
 import backArrow from '../images/back-arrow.svg';
 import backgroundPokeball from '../images/Background-Pokeball.svg';
@@ -11,6 +12,13 @@ const DetailHeader: React.FC<{
   handleNavigate: React.MouseEventHandler<HTMLButtonElement>;
 }> = ({ pokemon, handleNavigate }) => {
   const [isShiny, setIsShiny] = useState<boolean>(false);
+  const setActiveDetailComponent = useStore(
+    state => state.setActiveDetailComponent
+  );
+
+  const handleActiveComponent = (event: any) => {
+    setActiveDetailComponent(event.target.innerText);
+  };
 
   return (
     <ComponentContainer
@@ -48,9 +56,9 @@ const DetailHeader: React.FC<{
         </InfoContainer>
       </MainContainer>
       <NavContainer>
-        <button>About</button>
-        <button>Stats</button>
-        <button>Evolution</button>
+        <button onClick={handleActiveComponent}>About</button>
+        <button onClick={handleActiveComponent}>Stats</button>
+        <button onClick={handleActiveComponent}>Evolution</button>
       </NavContainer>
       <PokeballImg
         src={backgroundPokeball}
@@ -106,7 +114,7 @@ const InfoContainer = styled.div`
 `;
 const ImageContainer = styled.div`
   cursor: pointer;
-  position: relative;
+
   grid-column: 1 / 2;
   justify-self: center;
   margin-right: 10px;
@@ -126,6 +134,7 @@ const NavContainer = styled.div`
     background: none;
     text-align: center;
     cursor: pointer;
+    z-index: 5;
   }
 `;
 
@@ -158,7 +167,7 @@ const BackgroundName = styled.p`
     rgba(0, 0, 0, 0) 80%
   );
   -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
+  background-clip: text;
 `;
 
 const BackButton = styled.button`

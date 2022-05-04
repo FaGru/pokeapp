@@ -8,19 +8,19 @@ import DetailPage from './pages/DetailPage';
 import Home from './pages/Home';
 import { FetchErrorButton } from './components/Buttons';
 
-import { PokemonRootObject } from './interfaces/interfaces';
+import { PokemonRootObject } from './interfaces/pokemon_interface';
 
 import loadingSpinner from './images/loadingSpinner.svg';
 
 const App: React.FC = () => {
   const pokemonList = useStore<PokemonRootObject[]>(state => state.pokemonList);
-  const setPokemonList = useStore<() => Promise<void>>(
-    state => state.setPokemonList
+  const fetchPokemonList = useStore<() => Promise<void>>(
+    state => state.fetchPokemonList
   );
   const error = useStore<boolean>(state => state.error);
   const loadingPokemon = useStore<boolean>(state => state.loadingPokemon);
   useEffect(() => {
-    setPokemonList();
+    fetchPokemonList();
   }, []);
 
   if (loadingPokemon === true) {
