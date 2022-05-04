@@ -17,6 +17,10 @@ const DetailStats: React.FC<{
     state => state.activeDetailComponent
   );
 
+  let totalStats: number = 0;
+  pokemon.stats.map(stat => {
+    totalStats += stat.base_stat;
+  });
   return (
     <>
       {activeDetailComponent === 'Stats' ? (
@@ -24,22 +28,24 @@ const DetailStats: React.FC<{
           <Headline color={pokemon.types[0].type.name}>Base Stats</Headline>
           <StatsContainer>
             <div>
-              <TextBlack>HP</TextBlack>
-              <TextBlack>Attack</TextBlack>
-              <TextBlack>Defense</TextBlack>
-              <TextBlack>Sp. Atk</TextBlack>
-              <TextBlack>Sp. Def</TextBlack>
-              <TextBlack>Speed</TextBlack>
-              <TextBlack>Total</TextBlack>
+              <TextBlack data-testid="stat-name">HP</TextBlack>
+              <TextBlack data-testid="stat-name">Attack</TextBlack>
+              <TextBlack data-testid="stat-name">Defense</TextBlack>
+              <TextBlack data-testid="stat-name">Sp. Atk</TextBlack>
+              <TextBlack data-testid="stat-name">Sp. Def</TextBlack>
+              <TextBlack data-testid="stat-name">Speed</TextBlack>
+              <TextBlack data-testid="stat-name">Total</TextBlack>
             </div>
             <div>
               {pokemon.stats.map(stat => (
                 <TextGrey key={stat.stat.name}>{stat.base_stat}</TextGrey>
               ))}
+              <TextGreyBold>{totalStats}</TextGreyBold>
             </div>
             <StatBarContainer>
               {pokemon.stats.map(stat => (
                 <StatBar
+                  data-testid="stat-bar"
                   key={stat.stat.name}
                   color={pokemon.types[0].type.name}
                   property={String(stat.base_stat)}
@@ -89,6 +95,10 @@ const StatBar = styled.div`
 
 const TextGrey = styled.p`
   color: var(--font-color-grey);
+`;
+const TextGreyBold = styled.p`
+  color: var(--font-color-grey);
+  font-weight: 700;
 `;
 const TextBlack = styled.p`
   color: var(--font-color-black);
