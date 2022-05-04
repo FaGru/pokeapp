@@ -36,7 +36,6 @@ const DetailStats: React.FC<{
               {pokemon.stats.map(stat => (
                 <TextGrey key={stat.stat.name}>{stat.base_stat}</TextGrey>
               ))}
-              <TextGrey>{}</TextGrey>
             </div>
             <StatBarContainer>
               {pokemon.stats.map(stat => (
