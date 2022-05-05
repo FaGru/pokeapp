@@ -3,13 +3,9 @@ name: React App CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-  paths:
-    - 'client/*'
-    branches: [main]
+    branches: [ $default-branch ]
   pull_request:
-    paths:
-    - 'client/*'
-    branches: [main]
+    branches: [ $default-branch ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
