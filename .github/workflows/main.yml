@@ -22,8 +22,7 @@ jobs:
           node-version: 16.x
           
       - name: npm ci
-        run: npm ci
-        working-directory: client
+        run: (cd client && npm ci)
       - name: test
         run: (cd client && npm test -- --passWithNoTests)
       - name: check-tests
