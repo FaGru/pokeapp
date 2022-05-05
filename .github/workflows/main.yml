@@ -16,15 +16,25 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
+        with: 
+          ref: 'main-test'
       - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
       - name: npm ci
         run: npm ci
+        with:
+          working-directory: client
       - name: test
         run: npm test -- --passWithNoTests
+        with:
+          working-directory: client
       - name: check-tests
         run: npm test
+        with:
+          working-directory: client
       - name: format
         run: npm run test-all
+        with:
+          working-directory: client
