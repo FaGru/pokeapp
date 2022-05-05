@@ -21,10 +21,10 @@ jobs:
         with:
           node-version: 16.x
       - name: npm ci
-        run: (cd client && npm ci)
+        run: npm ci
       - name: test
-        run: (cd client && npm test -- --passWithNoTests)
+        run: npm test -- --passWithNoTests
       - name: check-tests
-        run: (cd client && npm test)
+        run: npm test
       - name: format
-        run: (cd client && npm run test-all)
+        run: npm run test-all
