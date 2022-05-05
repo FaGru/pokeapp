@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 import useStore from './hooks/useStore';
 
 import DetailPage from './pages/DetailPage';
@@ -21,6 +20,7 @@ const App: React.FC = () => {
   const loadingPokemon = useStore<boolean>(state => state.loadingPokemon);
   useEffect(() => {
     fetchPokemonList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loadingPokemon === true) {
