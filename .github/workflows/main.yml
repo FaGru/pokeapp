@@ -26,6 +26,8 @@ jobs:
         working-directory: ./client
         run: npm test -- --passWithNoTests
       - name: check-tests
+        working-directory: ./client
         run: npm test
       - name: format
+        working-directory: ./client
         run: npm run test-all
