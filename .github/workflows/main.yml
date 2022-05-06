@@ -23,6 +23,7 @@ jobs:
       - name: npm ci
         run: npm ci
       - name: test
+        working-directory: ./client
         run: npm test -- --passWithNoTests
       - name: check-tests
         run: npm test
