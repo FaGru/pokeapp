@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
 
 
   :root {
+    
     --card-color-normal: #B5B9C4;
     --card-color-grass: #8BBE8A;
     --card-color-poison: #9F6E97;
