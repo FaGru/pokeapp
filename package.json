@@ -17,17 +17,17 @@
     "zustand": "^4.0.0-rc.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "prepare": "husky install",
-    "check-types": "tsc --pretty --noEmit",
-    "check-format": "prettier --check .",
-    "check-lint": "eslint . --ext ts --ext tsx --ext js",
-    "format": "prettier --write .",
-    "test-local": "npm run check-format && npm run check-lint && npm run check-types",
-    "test-all": "npm run check-format && npm run check-lint && npm run check-types && npm run build"
+    "start": "cd client && react-scripts start",
+    "build": "cd client && react-scripts build",
+    "test": "cd client && react-scripts test",
+    "eject": "cd client && react-scripts eject",
+    "prepare": "cd client && husky install",
+    "check-types": "cd client && tsc --pretty --noEmit",
+    "check-format": "cd client && prettier --check .",
+    "check-lint": "cd client && eslint . --ext ts --ext tsx --ext js",
+    "format": "cd client && prettier --write .",
+    "test-local": "cd client && npm run check-format && npm run check-lint && npm run check-types",
+    "test-all": "cd client && npm run check-format && npm run check-lint && npm run check-types && npm run build"
   },
   "eslintConfig": {
     "extends": [
