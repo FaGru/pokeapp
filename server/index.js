@@ -7,6 +7,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 const { MONGODB_URL } = process.env;
 
+app.use(express.json()); //converts automatically to json
+
 try {
   mongoose.connect(MONGODB_URL);
   console.log("Connected to MongoDB.");
@@ -14,7 +16,6 @@ try {
   console.error("ERROR: could not connect", error.message);
 }
 
-app.use(express.json()); //converts automatically to json
 
 app.get("/getUsers", (req, res) => {
   UserModel.find({}, (err, result) => {
