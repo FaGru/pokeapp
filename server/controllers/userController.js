@@ -36,8 +36,21 @@ const setUser = asyncHandler(async (req, res) => {
 // @route  PUT /users/:id
 // @access  privat
 
+// const updateUser = asyncHandler(async (req, res) => {
+//   res.json({ message: `update User: ${req.params.id}` });
+// });
+
 const updateUser = asyncHandler(async (req, res) => {
-  res.json({ message: `update User: ${req.params.id}` });
+  const user = await UserModel.findById(req.params.id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User not found");
+  }
+  const updatedUser = await UserModel.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+  res.status(200).json(updatedUser);
 });
 
 // @desc   Delete User
@@ -45,7 +58,15 @@ const updateUser = asyncHandler(async (req, res) => {
 // @access  privat
 
 const deleteUser = asyncHandler(async (req, res) => {
-  res.json({ message: `delete User: ${req.params.id}` });
+  const user = await UserModel.findById(req.params.id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User not found");
+  }
+  await user.remove();
+
+  res.json({ id: req.params.id });
 });
 
 module.exports = {

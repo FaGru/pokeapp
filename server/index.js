@@ -1,22 +1,18 @@
-const express = require("express");
 const mongoose = require("mongoose");
+const express = require("express");
 const { errorHandler } = require("./middleware/errorMiddleware");
 const dotenv = require("dotenv");
+const connectDB = require("./config/db.js");
 
 dotenv.config();
+
 const port = process.env.PORT || 3001;
-const { MONGODB_URL } = process.env;
 
 const app = express();
 app.use(express.json()); //converts body automaticlly to json object
 app.use(express.urlencoded({ extended: false })); // url converter: converts characters to format that they can be transmitted
 
-try {
-  mongoose.connect(MONGODB_URL);
-  console.log("Connected to MongoDB.");
-} catch (error) {
-  console.error("ERROR: could not connect", error.message);
-}
+connectDB();
 
 app.use(errorHandler);
 
