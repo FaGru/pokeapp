@@ -1,4 +1,4 @@
-const UserModel = require("../models/userModel");
+const User = require("../models/userModel");
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -44,8 +44,6 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Invaild user Data");
   }
-
-  res.json({ message: "Register User" });
 });
 
 // @desc    Authenticate a User
