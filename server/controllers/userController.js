@@ -1,44 +1,33 @@
-const UserModel = require("../models/users");
+const UserModel = require("../models/userModel");
 const asyncHandler = require("express-async-handler");
 
-// @desc   Get Users
-// @route  GET /users
-// @access  privat
+// @desc    Register new User
+// @route   POST /users
+// @access  Public
 
-const getUsers = asyncHandler(async (req, res) => {
-  UserModel.find({}, (err, result) => {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(result);
-    }
-  });
+const registerUser = asyncHandler(async (req, res) => {
+  res.json({ message: "Register User" });
 });
 
-// @desc   Set User
-// @route  POST /users
-// @access  privat
+// @desc    Authenticate a User
+// @route   POST /users/login
+// @access  Public
 
-//WE HAVE TO ADD JSON OR BODY TO IF //////////////////////////////////////
-
-const setUser = asyncHandler(async (req, res) => {
-  if (!req.body) {
-    res.status(400);
-    throw new Error("pls add a text field");
-  }
-  const user = req.body;
-  const newUser = new UserModel(user);
-  await newUser.save();
-  res.json(); //send user back to frontend
+const loginUser = asyncHandler(async (req, res) => {
+  res.json({ message: "Login user" });
 });
 
-// @desc   Update User
-// @route  PUT /users/:id
-// @access  privat
+// @desc    Get user data
+// @route   GET /users/me
+// @access  Public
 
-// const updateUser = asyncHandler(async (req, res) => {
-//   res.json({ message: `update User: ${req.params.id}` });
-// });
+const getMe = asyncHandler(async (req, res) => {
+  res.json({ message: "User data display" });
+});
+
+// @desc    Update User
+// @route   PUT /users/:id
+// @access  privat
 
 const updateUser = asyncHandler(async (req, res) => {
   const user = await UserModel.findById(req.params.id);
@@ -70,8 +59,9 @@ const deleteUser = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  getUsers,
-  setUser,
+  getMe,
+  registerUser,
+  loginUser,
   updateUser,
   deleteUser,
 };

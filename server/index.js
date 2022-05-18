@@ -21,3 +21,4 @@ app.listen(port, () => {
 });
 
 app.use("/users", require("./routes/userRoutes"));
+app.use("/pokemons", require("./routes/pokemonRoutes"));
