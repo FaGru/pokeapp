@@ -39,6 +39,7 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
+      token: generateToken(user._id),
     });
   } else {
     res.status(400);
@@ -51,12 +52,28 @@ const registerUser = asyncHandler(async (req, res) => {
 // @access  Public
 
 const loginUser = asyncHandler(async (req, res) => {
-  res.json({ message: "Login user" });
+  const { email, password } = req.body;
+
+  //Check if email exists
+  const user = await User.findOne({ email });
+
+  //compare plain password with hased db password
+  if (user && (await bcrypt.compare(password, user.password))) {
+    res.json({
+      _id: user.id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invaild credentials");
+  }
 });
 
 // @desc    Get user data
 // @route   GET /users/me
-// @access  Public
+// @access  Private
 
 const getMe = asyncHandler(async (req, res) => {
   res.json({ message: "User data display" });
@@ -94,6 +111,14 @@ const deleteUser = asyncHandler(async (req, res) => {
 
   res.json({ id: req.params.id });
 });
+
+// Generate JWT --> ID is Payload
+// Takes 3 Arguments ID, the JWT_Secret and the expiry date
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
+};
 
 module.exports = {
   getMe,
