@@ -2,7 +2,8 @@ import React from 'react';
 import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-const Header = () => {
+
+const NavBar = () => {
   return (
     <header>
       <Container>
@@ -24,7 +25,7 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default NavBar;
 
 const LinkList = styled.ul`
   display: flex;

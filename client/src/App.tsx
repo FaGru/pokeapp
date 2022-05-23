@@ -8,7 +8,6 @@ import DetailPage from './pages/DetailPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
-import Header from './components/Header';
 import { FetchErrorButton } from './components/Buttons';
 
 import { PokemonRootObject } from './interfaces/pokemon_interface';
@@ -36,7 +35,6 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Header />
       {error ? (
         <>
           <h3 style={{ color: 'red', margin: '5px' }}>
