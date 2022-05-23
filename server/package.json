@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "node-backend-pokemon-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
