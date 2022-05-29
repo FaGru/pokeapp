@@ -6,17 +6,23 @@ import NavBar from '../components/NavBar';
 
 import { useNavigate } from 'react-router-dom';
 
+interface formInterface {
+  name: string;
+  email: string;
+  password: string;
+  password_confirm: string;
+}
+
 const Register = () => {
-  const { register, userLoginInformation } = backendUseStore<any>(
-    state => state
-  );
-  const [formData, setFormData] = useState({
+  const { register, userLoginInformation } = backendUseStore(state => state);
+  const [formData, setFormData] = useState<formInterface>({
     name: '',
     email: '',
     password: '',
+    password_confirm: '',
   });
-  const { name, email, password } = formData;
-  const { isLoading, isError } = backendUseStore<any>(state => state);
+  const { name, email, password, password_confirm } = formData;
+  const { isLoading, isError } = backendUseStore(state => state);
 
   const navigate = useNavigate();
 
@@ -27,12 +33,14 @@ const Register = () => {
     }
   }, [userLoginInformation]);
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
+    if (password !== password_confirm) {
+    }
   };
-  const handleSumbmit = (e: any) => {
-    e.preventDefault();
-    register(formData);
+  const handleSubmit = (event: React.FormEvent): void => {
+    event.preventDefault();
+    register({ name, email, password });
   };
 
   return (
@@ -45,54 +53,57 @@ const Register = () => {
         <p>Please create an account </p>
       </HeaderSection>
       <section>
-        <RegistrationForm onSubmit={handleSumbmit}>
-          <label>
+        <RegistrationForm onSubmit={handleSubmit}>
+          <FormLabel>
             Username:
             <input
               name="name"
               type="text"
-              placeholder="name"
+              placeholder="Enter your name"
               required
               value={name}
               onChange={handleChange}
             />
-          </label>
-          <label>
-            E-Mail:
+          </FormLabel>
+          <FormLabel>
+            Email:
             <input
               name="email"
               type="email"
-              placeholder="Email"
+              placeholder="Enter your Email"
               required
               value={email}
               onChange={handleChange}
             />
-          </label>
-          <label>
+          </FormLabel>
+          <FormLabel>
             Password:
             <input
               name="password"
               type="password"
               value={password}
-              placeholder="Password"
+              placeholder="Enter password"
               required
               onChange={handleChange}
             />
-          </label>
-          {/* <label>
-            Repeat Password:
+          </FormLabel>
+          <FormLabel>
+            Confirm Password:
             <input
-              name="password2"
+              name="password_confirm"
               type="password"
-              value={password2}
+              value={password_confirm}
               placeholder="Confirm password"
               required
               onChange={handleChange}
             />
-          </label> */}
-          <button type="submit">
+          </FormLabel>
+          <SubmitButton
+            type="submit"
+            disabled={password === password_confirm ? false : true}
+          >
             {isLoading ? 'Loading Data from Server' : 'Submit'}
-          </button>
+          </SubmitButton>
           {isError && <ErrorMessage>{isError}</ErrorMessage>}
         </RegistrationForm>
       </section>
@@ -107,15 +118,49 @@ const HeaderSection = styled.section`
 `;
 
 const RegistrationForm = styled.form`
-  margin-top: 30px;
+  padding: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  width: 100vw;
+
+  width: 100%;
+
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-family: inherit;
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-family: inherit;
+  }
 `;
 
 const ErrorMessage = styled.p`
   color: red;
+`;
+
+const FormLabel = styled.label`
+  text-align: left;
+  display: block;
+  margin: 0 0 5px 3px;
+  width: 50%;
+`;
+
+const SubmitButton = styled.button`
+  border-radius: 5px;
+  background: #000;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 10px 20px;
+  width: 50%;
 `;

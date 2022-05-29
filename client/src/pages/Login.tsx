@@ -5,12 +5,17 @@ import { FaSignInAlt } from 'react-icons/fa';
 import backendUseStore from '../hooks/backendUseStore';
 import { useNavigate } from 'react-router-dom';
 
+interface formInterface {
+  email: string;
+  password: string;
+}
+
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { login, isError, userLoginInformation } = backendUseStore<any>(
+  const { login, isError, userLoginInformation } = backendUseStore(
     state => state
   );
-  const [formData, setFormData] = useState<any>({
+  const [formData, setFormData] = useState<formInterface>({
     email: '',
     password: '',
   });
@@ -22,11 +27,11 @@ const Login: React.FC = () => {
   }, [userLoginInformation]);
   const { email, password } = formData;
 
-  const handleChange = (e: any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+  const handleSubmit = (event: React.FormEvent): void => {
+    event.preventDefault();
     login(formData);
   };
 
@@ -41,18 +46,18 @@ const Login: React.FC = () => {
       </HeaderSection>
       <section>
         <LoginForm onSubmit={handleSubmit}>
-          <label htmlFor="email">
-            email:
+          <FormLabel htmlFor="email">
+            Email:
             <br />
             <input
               onChange={handleChange}
               value={email}
               name="email"
-              placeholder="email"
+              placeholder="Enter your Email"
               required
             />
-          </label>
-          <label htmlFor="password">
+          </FormLabel>
+          <FormLabel htmlFor="password">
             Password:
             <br />
             <input
@@ -60,11 +65,11 @@ const Login: React.FC = () => {
               type="password"
               value={password}
               name="password"
-              placeholder="Password"
+              placeholder="Enter your password"
               required
             />
-          </label>
-          <button type="submit">login</button>
+          </FormLabel>
+          <SubmitButton type="submit">login</SubmitButton>
           {isError && <ErrorMessage>{isError}</ErrorMessage>}
         </LoginForm>
       </section>
@@ -73,19 +78,53 @@ const Login: React.FC = () => {
 };
 
 export default Login;
-
-const LoginForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
-`;
-
 const HeaderSection = styled.section`
   text-align: center;
 `;
 const ErrorMessage = styled.p`
   color: red;
+`;
+
+const LoginForm = styled.form`
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  width: 100%;
+
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-family: inherit;
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-family: inherit;
+  }
+`;
+
+const FormLabel = styled.label`
+  text-align: left;
+  display: block;
+  margin: 0 0 5px 3px;
+  width: 50%;
+`;
+
+const SubmitButton = styled.button`
+  border-radius: 5px;
+  background: #000;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 10px 20px;
+  width: 50%;
 `;

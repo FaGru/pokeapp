@@ -4,18 +4,34 @@ import axios from 'axios';
 const userLoginInformation = JSON.parse(
   localStorage.getItem('userLoginInformation') || '{}'
 );
+interface userData {
+  email: string;
+  id: string;
+  name: string;
+}
+interface backendInterface {
+  userData: userData | null;
+  userLoginInformation: Object;
+  isError: string;
+  isLoading: boolean;
+  API_URL: string;
+  getUserData: (arg0: string) => Promise<void>;
+  register: (arg0: Object) => Promise<void>;
+  login: (arg0: Object) => Promise<void>;
+  logOut: () => void;
+}
 
-const backendUseStore = create((set: any, get: any) => ({
+const backendUseStore = create<backendInterface>((set, get) => ({
   userData: null,
   userLoginInformation: userLoginInformation,
-  isError: false,
+  isError: '',
   isLoading: false,
   API_URL: '/users',
 
-  register: async (formData: any) => {
+  register: async (formData: Object) => {
     set({ isLoading: true });
-    set({ isError: null });
-    const API_URL = get().API_URL;
+    set({ isError: '' });
+    const API_URL: string = get().API_URL;
     try {
       const response = await axios.post(API_URL, formData);
       if (response.data) {
@@ -26,7 +42,7 @@ const backendUseStore = create((set: any, get: any) => ({
         get().getUserData(response.data.token);
         set({
           isLoading: false,
-          isError: null,
+          isError: '',
           userLoginInformation: response.data,
         });
       }
@@ -35,12 +51,11 @@ const backendUseStore = create((set: any, get: any) => ({
         isLoading: false,
         isError: 'Something went wrong. Please try again!',
       });
-      console.log('ERROR WHILE REGISTERING');
     }
   },
-  login: async (formData: any) => {
+  login: async (formData: Object) => {
     set({ isLoading: true });
-    set({ isError: null });
+    set({ isError: '' });
     const API_URL = get().API_URL + '/login';
     try {
       const response = await axios.post(API_URL, formData);
@@ -52,7 +67,7 @@ const backendUseStore = create((set: any, get: any) => ({
         get().getUserData(response.data.token);
         set({
           isLoading: false,
-          isError: null,
+          isError: '',
           userLoginInformation: response.data,
         });
       }
@@ -61,12 +76,11 @@ const backendUseStore = create((set: any, get: any) => ({
         isLoading: false,
         isError: 'Login or password is invaild',
       });
-      console.log('Login or password is invaild');
     }
   },
 
-  getUserData: async (token: any) => {
-    set({ isLoading: true, isError: null });
+  getUserData: async (token: string) => {
+    set({ isLoading: true, isError: '' });
     const API_URL = get().API_URL + '/me';
     try {
       const response = await axios.get(API_URL, {
@@ -77,20 +91,18 @@ const backendUseStore = create((set: any, get: any) => ({
       });
 
       if (response.data) {
-        set({ isLoading: false, isError: null, userData: response.data });
-        console.log('userData', response.data);
+        set({ isLoading: false, isError: '', userData: response.data });
       }
     } catch (error) {
       set({
         isLoading: false,
         isError: 'Can not get User Data. Please try again',
       });
-      console.log(error);
     }
   },
   logOut: () => {
     localStorage.removeItem('userLoginInformation');
-    set({ userLoginInformation: {} , userData: null });
+    set({ userLoginInformation: {}, userData: null });
   },
 }));
 
