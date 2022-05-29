@@ -21,6 +21,7 @@ const App: React.FC = () => {
   );
   const error = useStore<boolean>(state => state.error);
   const loadingPokemon = useStore<boolean>(state => state.loadingPokemon);
+
   useEffect(() => {
     fetchPokemonList();
   }, []);

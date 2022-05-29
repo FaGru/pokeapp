@@ -1,24 +1,36 @@
-import React from 'react';
 import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import backendUseStore from '../hooks/backendUseStore';
 
 const NavBar = () => {
+  const { userData, logOut } = backendUseStore(state => state);
+
   return (
     <header>
       <Container>
         <Link to="/">PokeApp</Link>
         <LinkList>
-          <li>
-            <Link to="/login">
-              <FaSignInAlt /> Login
-            </Link>
-          </li>
-          <li>
-            <Link to="/register">
-              <FaUser /> Register
-            </Link>
-          </li>
+          {userData ? (
+            <li>
+              <button onClick={() => logOut()}>
+                <FaSignOutAlt /> Logout
+              </button>
+            </li>
+          ) : (
+            <>
+              <li>
+                <Link to="/login">
+                  <FaSignInAlt /> Login
+                </Link>
+              </li>
+              <li>
+                <Link to="/register">
+                  <FaUser /> Register
+                </Link>
+              </li>
+            </>
+          )}
         </LinkList>
       </Container>
     </header>

@@ -4,23 +4,34 @@ import { useState, useEffect } from 'react';
 import backendUseStore from '../hooks/backendUseStore';
 import NavBar from '../components/NavBar';
 
+import { useNavigate } from 'react-router-dom';
+
 const Register = () => {
+  const { register, userLoginInformation } = backendUseStore<any>(
+    state => state
+  );
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
   });
-
   const { name, email, password } = formData;
+  const { isLoading, isError } = backendUseStore<any>(state => state);
 
-  const register = backendUseStore<any>(state => state.register);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    //If userLoginInformation found navigate to home
+    if (Object.keys(userLoginInformation).length !== 0) {
+      navigate('/');
+    }
+  }, [userLoginInformation]);
 
   const handleChange = (event: any) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
   const handleSumbmit = (e: any) => {
     e.preventDefault();
-    console.log(e.target.name);
     register(formData);
   };
 
@@ -79,7 +90,10 @@ const Register = () => {
               onChange={handleChange}
             />
           </label> */}
-          <button type="submit">Submit</button>
+          <button type="submit">
+            {isLoading ? 'Loading Data from Server' : 'Submit'}
+          </button>
+          {isError && <ErrorMessage>{isError}</ErrorMessage>}
         </RegistrationForm>
       </section>
     </>
@@ -100,4 +114,8 @@ const RegistrationForm = styled.form`
   align-items: center;
   gap: 10px;
   width: 100vw;
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
 `;

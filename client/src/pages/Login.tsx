@@ -1,19 +1,33 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NavBar from '../components/NavBar';
 import { FaSignInAlt } from 'react-icons/fa';
+import backendUseStore from '../hooks/backendUseStore';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
-  const [loginData, setLoginData] = useState<any>({
+  const navigate = useNavigate();
+  const { login, isError, userLoginInformation } = backendUseStore<any>(
+    state => state
+  );
+  const [formData, setFormData] = useState<any>({
     email: '',
     password: '',
   });
-  console.log(loginData);
+  useEffect(() => {
+    //If userLoginInformation found navigate to home
+    if (Object.keys(userLoginInformation).length !== 0) {
+      navigate('/');
+    }
+  }, [userLoginInformation]);
+  const { email, password } = formData;
 
-  const { email, password } = loginData;
-
-  const handleLogin = (event: any) => {
-    setLoginData({ ...loginData, [event.target.name]: event.target.value });
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    login(formData);
   };
 
   return (
@@ -26,16 +40,24 @@ const Login: React.FC = () => {
         <p>Please login!</p>
       </HeaderSection>
       <section>
-        <LoginForm onSubmit={handleLogin} onChange={handleLogin}>
+        <LoginForm onSubmit={handleSubmit}>
           <label htmlFor="email">
             email:
             <br />
-            <input value={email} name="email" placeholder="email" required />
+            <input
+              onChange={handleChange}
+              value={email}
+              name="email"
+              placeholder="email"
+              required
+            />
           </label>
           <label htmlFor="password">
             Password:
             <br />
             <input
+              onChange={handleChange}
+              type="password"
               value={password}
               name="password"
               placeholder="Password"
@@ -43,6 +65,7 @@ const Login: React.FC = () => {
             />
           </label>
           <button type="submit">login</button>
+          {isError && <ErrorMessage>{isError}</ErrorMessage>}
         </LoginForm>
       </section>
     </div>
@@ -62,4 +85,7 @@ const LoginForm = styled.form`
 
 const HeaderSection = styled.section`
   text-align: center;
+`;
+const ErrorMessage = styled.p`
+  color: red;
 `;

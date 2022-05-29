@@ -7,7 +7,7 @@ import Pokecard from '../components/Pokecard';
 import NavBar from '../components/NavBar';
 import useStore from '../hooks/useStore';
 
-const Test: React.FC = () => {
+const Home: React.FC = () => {
   const pokemonList = useStore<PokemonRootObject[]>(state => state.pokemonList);
 
   return (
@@ -29,7 +29,7 @@ const Test: React.FC = () => {
   );
 };
 
-export default Test;
+export default Home;
 
 const PokemonContainer = styled.div`
   display: flex;
