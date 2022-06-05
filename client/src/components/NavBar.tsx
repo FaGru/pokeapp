@@ -8,7 +8,13 @@ const NavBar = () => {
   return (
     <header>
       <Container>
-        <Link to="/">PokeApp</Link>
+        <Link to="/">
+          <Logo
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/1280px-International_Pok%C3%A9mon_logo.svg.png"
+            height="80"
+            width="200"
+          />
+        </Link>
         {userData ? (
           <LinkList>
             <li>Hello {userData.name}!</li>
@@ -59,3 +65,5 @@ const Container = styled.div`
   border-bottom: 1px solid #e6e6e6;
   margin: 5px;
 `;
+
+const Logo = styled.img``;

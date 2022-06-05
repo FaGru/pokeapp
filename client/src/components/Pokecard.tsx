@@ -1,8 +1,13 @@
 import styled from 'styled-components';
 import { nanoid } from 'nanoid';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 import { PokecardProps } from '../interfaces/pokemon_interface';
+
+export interface DanceProps {
+  active: boolean;
+}
 
 const Pokecard: React.FC<PokecardProps> = ({
   name,
@@ -12,16 +17,24 @@ const Pokecard: React.FC<PokecardProps> = ({
   color,
 }) => {
   const navigate = useNavigate();
+  const [dance, setDance] = useState<boolean>(false);
+
+  const handleClick = () => {
+    setDance(true);
+    setTimeout(function () {
+      navigate(`/${name}`);
+    }, 1200);
+  };
   return (
     <CardContainer
       data-testid="card-container"
       color={color}
-      onClick={() => navigate(`/${name}`)}
+      onClick={handleClick}
     >
       <PokedexID>{number}</PokedexID>
       <PokemonName>{name[0].toUpperCase() + name.slice(1)}</PokemonName>
       <ImageContainer>
-        <img src={image} alt={name} width="200" />
+        <PokemonIMG src={image} alt={name} width="200" active={dance} />
       </ImageContainer>
       <TypeContainer>
         <p>Type:</p>
@@ -56,43 +69,44 @@ const ImageContainer = styled.div`
   border-radius: 10px;
   border: 1px solid var(--card-color-gold);
   box-shadow: inset 0 0 90px 2px var(--card-color-gold);
-  img {
-    &:active {
-      animation: dance 1.2s alternate;
+`;
+const PokemonIMG = styled.img<DanceProps>`
+  ${props =>
+    props.active &&
+    `  animation: dance 1.2s alternate;
+
+  @keyframes dance {
+    10% {
+      transform: rotate(-5deg) translateY(-2px);
     }
-    @keyframes dance {
-      10% {
-        transform: rotate(-5deg) translateY(-2px);
-      }
-      12% {
-        transform: rotate(10deg) translateY(-2px);
-      }
-      14% {
-        transform: rotate(-5deg) translateY(-2px);
-      }
-      16% {
-        transform: rotate(10deg) translateY(-2px);
-      }
-      18% {
-        transform: rotate(-5deg) translateY(-2px);
-      }
-      20% {
-        transform: rotate(10deg) translateY(-2px);
-      }
-      25% {
-        transform: rotate(-5deg) translateY(-2px);
-      }
-      30% {
-        transform: rotate(15deg) translateY(-2px);
-      }
-      60% {
-        transform: rotate(-15deg) translateY(-40px) scale(1.2);
-      }
-      100% {
-        transform: translateY(0);
-      }
+    12% {
+      transform: rotate(10deg) translateY(-2px);
     }
-  }
+    14% {
+      transform: rotate(-5deg) translateY(-2px);
+    }
+    16% {
+      transform: rotate(10deg) translateY(-2px);
+    }
+    18% {
+      transform: rotate(-5deg) translateY(-2px);
+    }
+    20% {
+      transform: rotate(10deg) translateY(-2px);
+    }
+    25% {
+      transform: rotate(-5deg) translateY(-2px);
+    }
+    30% {
+      transform: rotate(15deg) translateY(-2px);
+    }
+    60% {
+      transform: rotate(-15deg) translateY(-40px) scale(1.2);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }`};
 `;
 const PokemonName = styled.h2`
   grid-row: 1 / 2;

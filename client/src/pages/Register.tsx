@@ -100,7 +100,9 @@ const Register = () => {
           </FormLabel>
           <SubmitButton
             type="submit"
-            disabled={password === password_confirm ? false : true}
+            disabled={
+              password === password_confirm && password !== '' ? false : true
+            }
           >
             {isLoading ? 'Loading Data from Server' : 'Submit'}
           </SubmitButton>
