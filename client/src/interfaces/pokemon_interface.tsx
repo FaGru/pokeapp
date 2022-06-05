@@ -305,13 +305,13 @@ export interface Stat {
 }
 
 export interface Type2 {
-  name?: string;
-  url?: string;
+  name?: string | undefined;
+  url?: string | undefined;
 }
 
 export interface Type {
-  slot: number;
-  type?: Type2;
+  slot?: number | undefined;
+  type?: Type2 | undefined;
 }
 
 export interface PokemonRootObject {
@@ -340,17 +340,17 @@ export interface PokecardProps {
   number: number;
   types: [
     {
-      slot: Number;
+      slot: number;
       type: {
-        name: String;
-        url: String;
+        name: string;
+        url: string;
       };
     },
     {
-      slot: Number;
+      slot: number;
       type: {
-        name: String;
-        url: String;
+        name: string;
+        url: string;
       };
     }
   ];
@@ -362,17 +362,17 @@ export interface DetailPageProps {
   number: Number;
   types: [
     {
-      slot: Number;
+      slot: number;
       type: {
-        name: String;
-        url: String;
+        name: string;
+        url: string;
       };
     },
     {
-      slot: Number;
+      slot: number;
       type: {
-        name: String;
-        url: String;
+        name: string;
+        url: string;
       };
     }
   ];

@@ -81,6 +81,7 @@ const Login: React.FC = () => {
 export default Login;
 const HeaderSection = styled.section`
   text-align: center;
+  margin-top: 120px;
 `;
 const ErrorMessage = styled.p`
   color: red;
@@ -121,11 +122,12 @@ const FormLabel = styled.label`
 
 const SubmitButton = styled.button`
   border-radius: 5px;
-  background: #000;
-  color: #fff;
+  background: var(--font-color-psychic);
+  color: var(--font-color-white);
   font-size: 16px;
-  font-weight: 700;
+
   cursor: pointer;
   padding: 10px 20px;
   width: 50%;
+  box-shadow: 0px 10px 20px 0px #ea5d604d;
 `;
