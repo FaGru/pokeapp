@@ -70,7 +70,11 @@ const Login: React.FC = () => {
               required
             />
           </FormLabel>
-          <SubmitButton type="submit">login</SubmitButton>
+          <SubmitButton
+            type="submit"
+          >
+            login
+          </SubmitButton>
           {isError && <ErrorMessage>{isError}</ErrorMessage>}
         </LoginForm>
       </section>
