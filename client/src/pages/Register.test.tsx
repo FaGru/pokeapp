@@ -83,5 +83,4 @@ describe('Register', () => {
     userEvent.type(passwordConfirmInput, 'HelloWorld123');
     expect(submitButton).toBeDisabled();
   });
-
 });
