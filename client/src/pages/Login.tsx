@@ -131,4 +131,3 @@ const SubmitButton = styled.button`
   width: 50%;
   box-shadow: 0px 10px 20px 0px #ea5d604d;
 `;
-

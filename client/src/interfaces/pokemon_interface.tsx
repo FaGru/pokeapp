@@ -340,17 +340,17 @@ export interface PokecardProps {
   number: number;
   types: [
     {
-      slot: number ;
+      slot: number;
       type: {
-        name: string ;
-        url: string ;
+        name: string;
+        url: string;
       };
     },
     {
-      slot: number ;
+      slot: number;
       type: {
-        name: string ;
-        url: string ;
+        name: string;
+        url: string;
       };
     }
   ];
