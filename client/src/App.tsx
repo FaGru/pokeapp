@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
+
 import useStore from './hooks/useStore';
 
 import DetailPage from './pages/DetailPage';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import Home from './pages/Home';
 import { FetchErrorButton } from './components/Buttons';
 
@@ -19,6 +21,7 @@ const App: React.FC = () => {
   );
   const error = useStore<boolean>(state => state.error);
   const loadingPokemon = useStore<boolean>(state => state.loadingPokemon);
+
   useEffect(() => {
     fetchPokemonList();
   }, []);
@@ -52,6 +55,8 @@ const App: React.FC = () => {
               element={<DetailPage pokemon={pokemon} />}
             />
           ))}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       )}
     </>
