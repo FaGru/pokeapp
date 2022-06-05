@@ -1,6 +1,6 @@
 import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import backendUseStore from '../hooks/backendUseStore';
 
 const NavBar = () => {
@@ -8,13 +8,12 @@ const NavBar = () => {
   return (
     <header>
       <Container>
-        <Link to="/">
+        <NavLink to="/">
           <Logo
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/1280px-International_Pok%C3%A9mon_logo.svg.png"
-            height="80"
-            width="200"
+            width="180px"
           />
-        </Link>
+        </NavLink>
         {userData ? (
           <LinkList>
             <li>Hello {userData.name}!</li>
@@ -27,14 +26,14 @@ const NavBar = () => {
         ) : (
           <LinkList>
             <li>
-              <Link to="/login">
+              <NavLink to="/login">
                 <FaSignInAlt /> Login
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/register">
+              <NavLink to="/register">
                 <FaUser /> Register
-              </Link>
+              </NavLink>
             </li>
           </LinkList>
         )}
@@ -52,18 +51,32 @@ const LinkList = styled.ul`
   gap: 10px;
   text-decoration: none;
   list-style: none;
+  margin-right: 20px;
+
   a {
     color: var(--font-color-black);
     text-decoration: none;
     margin: 5px;
+    :hover {
+      border-bottom: 1px solid black;
+    }
   }
 `;
 const Container = styled.div`
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: lightgray;
+  position: fixed;
   display: grid;
   grid-template-columns: auto auto auto;
   align-items: center;
-  border-bottom: 1px solid #e6e6e6;
-  margin: 5px;
+  border-bottom: 1px solid var(--font-color-grey);
 `;
-
-const Logo = styled.img``;
+const Logo = styled.img`
+  margin: 5px 0 5px 20px;
+`;

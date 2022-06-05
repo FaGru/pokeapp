@@ -35,5 +35,6 @@ const PokemonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 15px;
+  gap: 40px;
+  margin: 120px 0 80px 0;
 `;
