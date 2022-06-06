@@ -10,7 +10,7 @@ import backgroundPokeball from '../images/Background-Pokeball.svg';
 export interface DanceProps {
   active: boolean;
 }
-//test
+
 const Pokecard: React.FC<PokecardProps> = ({
   name,
   number,
