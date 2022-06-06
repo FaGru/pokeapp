@@ -26,7 +26,7 @@ const backendUseStore = create<backendInterface>((set, get) => ({
   userLoginInformation: userLoginInformation,
   isError: '',
   isLoading: false,
-  API_URL: 'https://pokeapp-backend-8b98f5ko0-fagru.vercel.app/users/',
+  API_URL: 'https://pokeapp-backend-8b98f5ko0-fagru.vercel.app/users',
 
   register: async (formData: Object) => {
     set({ isLoading: true });
