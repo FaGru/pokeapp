@@ -26,7 +26,7 @@ const backendUseStore = create<backendInterface>((set, get) => ({
   userLoginInformation: userLoginInformation,
   isError: '',
   isLoading: false,
-  API_URL: process.env.API_URL || '/users',
+  API_URL: process.env.REACT_APP_API_URL || '/users',
 
   register: async (formData: Object) => {
     set({ isLoading: true });
