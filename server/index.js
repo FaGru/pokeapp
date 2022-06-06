@@ -23,3 +23,9 @@ app.listen(port, () => {
 
 app.use("/users", require("./routes/userRoutes"));
 app.use("/pokemons", require("./routes/pokemonRoutes"));
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
