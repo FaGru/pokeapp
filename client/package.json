@@ -2,6 +2,7 @@
   "name": "pokeapp",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@types/jest": "^27.4.1",
     "@types/node": "^16.11.26",

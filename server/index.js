@@ -13,6 +13,13 @@ const app = express();
 app.use(express.json()); //converts body automaticlly to json object
 app.use(express.urlencoded({ extended: false })); // url converter: converts characters to format that they can be transmitted
 app.use(cors());
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 connectDB();
 
 app.use(errorHandler);
@@ -23,9 +30,3 @@ app.listen(port, () => {
 
 app.use("/users", require("./routes/userRoutes"));
 app.use("/pokemons", require("./routes/pokemonRoutes"));
-
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
