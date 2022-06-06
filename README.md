@@ -5,13 +5,14 @@
 Fullstack application made with MongoDB, Express, React & Nodejs (MERN) and TypeScript.
 The app is using the [PokeApi](https://pokeapi.co/) for constructing RESTful API.
 PokeAPI provides a RESTful API interface to highly detailed objects built from thousands of lines of data related to Pokémon.
+The server (backend) provides User Registration and Login functionality with validations using React, NodeJs, ExpressJs and MongoDB and authentication using JWTs.
 
 
 ## `Current version`
 
 Visit the latest version of [PokeApp](https://pokeapp-sand.vercel.app/)!
 
-## `Tech Stack`
+## `Tech Stack - Frontend`
 
 - [TypeScript](https://www.typescriptlang.org/)
 - [React](https://reactjs.org/)
@@ -19,12 +20,19 @@ Visit the latest version of [PokeApp](https://pokeapp-sand.vercel.app/)!
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) / [Jest](https://jestjs.io/)
 - [Zustand](https://www.npmjs.com/package/zustand)
 - [styled components](https://styled-components.com/)
-- [MongoDB](https://www.mongodb.com/)
+- [Axios](https://www.npmjs.com/package/axios)
+
+
+## `Tech Stack - Backend`
 - [Express](https://expressjs.com/)
+- [MongoDB](https://www.mongodb.com/)
 - [Node](https://nodejs.dev/)
 - [JSON Web Token](https://jwt.io/)
 - [Axios](https://www.npmjs.com/package/axios)
 - [bcryptjs](https://www.npmjs.com/package/bcryptjs)
+- [JSON Web Token](https://jwt.io/)
+
+
 
 ## `Project Setup`
 
@@ -37,7 +45,10 @@ Then go to the project folder:
 Switch to the client folder:
 `cd client`
 
-Install all dependencies:
+Create .env file that include (Only if you run the backend not locally):
+`REACT_APP_API_URL`
+
+Install all client dependencies:
 `npm install`
 
 Run the Localhost:
@@ -49,7 +60,10 @@ Run the Tests:
 Switch to server folder:
 `cd ../server`
 
-Install all dependencies:
+Create .env file that include (See .env.example):
+`MONGODB_URL & PORT & JWT_SECRET`
+
+Install all server dependencies:
 `npm install`
 
 Run server:
