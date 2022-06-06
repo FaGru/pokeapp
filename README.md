@@ -36,38 +36,44 @@ Visit the latest version of [PokeApp](https://pokeapp-sand.vercel.app/)!
 
 ## `Project Setup Client`
 
-- First clone the Project with:
-`git clone git@github.com:FaGru/pokeapp.git`
+First clone the project and go the the client folder:
+```
+git clone git@github.com:FaGru/pokeapp.git
+```
+```
+cd pokeapp/client
+```
 
-- Then go to the project folder:
-`cd pokeapp`
+Create .env file that include (Only if you run the backend not locally):
+```
+REACT_APP_API_URL
+```
 
-- Switch to the client folder:
-`cd client`
+Install all client dependencies and start the localhost:
+```
+npm install && npm start
+```
 
-- Create .env file that include (Only if you run the backend not locally):
-`REACT_APP_API_URL`
 
-- Install all client dependencies:
-`npm install`
-
-- Run the Localhost:
-`npm start`
-
-- Run the Tests:
-`npm test`
+Run the Tests:
+```
+npm test
+```
 
 ## `Project Setup Server`
 
-- Switch to server folder:
-`cd server`
+Switch to server folder:
+```
+cd server
+```
 
-- Create .env file that include (See .env.example):
-`MONGODB_URL & PORT & JWT_SECRET`
+Create .env file that include (See .env.example):
+```
+MONGODB_URL & PORT & JWT_SECRET
+```
 
-- Install all server dependencies:
-`npm install`
-
-- Run server:
-`npm start`
+Install all server dependencies and start the server:
+```
+npm install && npm start
+```
 
