@@ -14,8 +14,6 @@ import { PokemonRootObject } from './interfaces/pokemon_interface';
 
 import loadingSpinner from './images/loadingSpinner.svg';
 
-console.log(process.env.REACT_APP_API_URL || 'HELLO WORLD');
-
 const App: React.FC = () => {
   const pokemonList = useStore<PokemonRootObject[]>(state => state.pokemonList);
   const fetchPokemonList = useStore<() => Promise<void>>(
