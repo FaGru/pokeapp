@@ -24,8 +24,8 @@ const NavBar = () => {
         <Button onClick={handleClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="25"
+            height="25"
             fill="currentColor"
             viewBox="0 0 16 16"
           >
@@ -107,8 +107,13 @@ const Logo = styled.img`
 
 const Button = styled.button`
   grid-column: 3 / 4;
-  background-color: var(--font-color-psychic);
-  border: 2px solid var(--font-color-psychic);
-  padding: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  /* background-color: gray; */
+  /* width: 70px;
+  height: 35px;
+  border-radius: 10px; */
   justify-self: flex-end;
+  /* box-shadow: 0px 0px 30px 5px white; */
 `;

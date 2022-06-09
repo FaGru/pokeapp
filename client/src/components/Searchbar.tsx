@@ -1,14 +1,73 @@
 import useStore from '../hooks/useStore';
 import styled from 'styled-components';
-import { PokemonRootObject } from '../interfaces/pokemon_interface';
+import Select from 'react-select';
 
 import React from 'react';
-import { FaBullseye } from 'react-icons/fa';
 
 const Searchbar = () => {
   const { pokeTypesList, setSearchInput, searchInput } = useStore(
     state => state
   );
+
+  //React Select
+  let options;
+  const createOptions = () => {
+    options = pokeTypesList?.results.slice(0, 18).map(result => {
+      return {
+        value: result.name,
+        icon: (
+          <img
+            src={`./images/type-${result.name}.svg`}
+            height="28px"
+            alt={result.name}
+          ></img>
+        ),
+      };
+    });
+  };
+  createOptions();
+
+  const styles: any = {
+    control: (styles: any) => ({
+      ...styles,
+      border: '2px solid black',
+      backgroundColor: '#f2f2f2',
+      fontSize: '95%',
+    }),
+    placeholder: () => ({
+      color: 'gray',
+    }),
+    valueContainer: () => ({
+      display: 'flex',
+      marginLeft: '15px',
+    }),
+    indicatorSeparator: () => ({
+      display: 'none',
+    }),
+    menu: (provided: any, state: any) => ({
+      ...provided,
+      border: '2px solid black',
+      borderRadius: '10px',
+      backgroundColor: 'lightgray',
+      width: '100px',
+    }),
+  };
+
+  const getLabelFrom: any = (event: any) => {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        {event.icon}
+      </div>
+    );
+  };
+
+  // Normal Searchbar
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const trimmedInputString = event.target.value.trim();
@@ -22,13 +81,23 @@ const Searchbar = () => {
     }
   };
 
-  console.log(pokeTypesList.results);
   return (
     <SearchContainer>
       <Description>
         <p>Search for Pokémon by name or using the National Pokédex number.</p>
       </Description>
+
       <SearchInputContainer>
+        <ReactSelect
+          options={options}
+          aria-label="Filter types"
+          name="Filter types"
+          isMulti
+          getOptionLabel={getLabelFrom}
+          isSearchable={false}
+          placeholder="Filter for Pokemon Types"
+          styles={styles}
+        />
         <SearchLabel>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -76,12 +145,14 @@ const SearchInputContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const SearchInput = styled.input`
   background: #f2f2f2;
   border-radius: 10px;
-  width: 300px;
+  width: 320px;
   height: 40px;
   padding: 20px 15px;
 `;
@@ -92,10 +163,14 @@ const SearchLabel = styled.label`
     position: absolute;
     right: 25px;
     top: 15px;
-    z-index: 5;
   }
 `;
 
 const ErrorMessage = styled.p`
   color: red;
+`;
+
+const ReactSelect = styled(Select)`
+  width: 250px;
+  margin-bottom: 5px;
 `;

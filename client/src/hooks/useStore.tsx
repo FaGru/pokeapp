@@ -4,10 +4,11 @@ import { PokemonRootObject } from '../interfaces/pokemon_interface';
 import { SpeciesPokemonRootObject } from '../interfaces/species_interface';
 import { TypesPokemonRootObject } from '../interfaces/types_interface';
 import { EvolutionRootObject } from '../interfaces/evolution_interface';
+import { AllTypesRootObject } from '../interfaces/all_types_interface';
 
 interface pokeInterfaces {
   pokemonList: PokemonRootObject[];
-  pokeTypesList: any;
+  pokeTypesList: AllTypesRootObject | null;
   searchInput: { searchString: string; errorState: boolean };
   isSearchVisible: boolean;
   pokemonSpeciesDetails: SpeciesPokemonRootObject | null;
@@ -36,7 +37,7 @@ const useStore = create<pokeInterfaces>((set, get) => ({
     searchString: '',
     errorState: false,
   },
-  pokeTypesList: [],
+  pokeTypesList: null,
   pokemonSpeciesDetails: null,
   pokemonTypeDetails: null,
   pokemonEvolutionChain: null,
