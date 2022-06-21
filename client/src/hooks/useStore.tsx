@@ -10,6 +10,7 @@ interface pokeInterfaces {
   pokemonList: PokemonRootObject[];
   pokeTypesList: AllTypesRootObject | null;
   searchInput: { searchString: string; errorState: boolean };
+  filterSelect: string[];
   isSearchVisible: boolean;
   pokemonSpeciesDetails: SpeciesPokemonRootObject | null;
   pokemonTypeDetails: TypesPokemonRootObject | null;
@@ -28,6 +29,7 @@ interface pokeInterfaces {
   setActiveDetailComponent: (arg0: string) => void;
   setSearchInput: (arg0: string, arg1: boolean) => void;
   setIsSearchVisible: () => void;
+  setFilterSelect: (arg0: string[]) => void;
 }
 
 const useStore = create<pokeInterfaces>((set, get) => ({
@@ -37,6 +39,7 @@ const useStore = create<pokeInterfaces>((set, get) => ({
     searchString: '',
     errorState: false,
   },
+  filterSelect: [],
   pokeTypesList: null,
   pokemonSpeciesDetails: null,
   pokemonTypeDetails: null,
@@ -119,6 +122,11 @@ const useStore = create<pokeInterfaces>((set, get) => ({
     const isSearchVisible = get().isSearchVisible;
     set({
       isSearchVisible: !isSearchVisible,
+    });
+  },
+  setFilterSelect: (input: string[]) => {
+    set({
+      filterSelect: input,
     });
   },
 }));

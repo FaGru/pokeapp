@@ -2,15 +2,28 @@ import useStore from '../hooks/useStore';
 import styled from 'styled-components';
 import Select from 'react-select';
 
-import React from 'react';
-
 const Searchbar = () => {
-  const { pokeTypesList, setSearchInput, searchInput } = useStore(
-    state => state
-  );
+  const {
+    pokeTypesList,
+    filterSelect,
+    setFilterSelect,
+    searchInput,
+    setSearchInput,
+  } = useStore(state => state);
+
+  // type OptionType = {
+  //   value: string;
+  //   icon: string;
+  // };
 
   //React Select
-  let options;
+
+  type OptionType = {
+    value: string;
+    icon: Object;
+  };
+
+  let options: any = [];
   const createOptions = () => {
     options = pokeTypesList?.results.slice(0, 18).map(result => {
       return {
@@ -18,7 +31,7 @@ const Searchbar = () => {
         icon: (
           <img
             src={`./images/type-${result.name}.svg`}
-            height="28px"
+            height="25px"
             alt={result.name}
           ></img>
         ),
@@ -26,6 +39,8 @@ const Searchbar = () => {
     });
   };
   createOptions();
+
+  console.log(options);
 
   const styles: any = {
     control: (styles: any) => ({
@@ -43,6 +58,11 @@ const Searchbar = () => {
     }),
     indicatorSeparator: () => ({
       display: 'none',
+    }),
+    indicatorsContainer: () => ({
+      padding: '0px',
+      margin: '0px',
+      display: 'flex',
     }),
     menu: (provided: any, state: any) => ({
       ...provided,
@@ -81,6 +101,29 @@ const Searchbar = () => {
     }
   };
 
+  const handleDropdownChange = (prop1: OptionType[]): void => {
+    const filterList: string[] | [] = prop1.map((prop: OptionType) => {
+      return prop.value;
+    });
+    setFilterSelect(filterList);
+  };
+
+
+  type OptionType = { [string]: any }
+
+type CommonProps = {
+  clearValue: () => void,
+  getStyles: (string, any) => {},
+  getValue: () => ValueType,
+  hasValue: boolean,
+  isMulti: boolean,
+  options: OptionsType,
+  selectOption: OptionType => void,
+  selectProps: any,
+  setValue: (ValueType, ActionTypes) => void,
+  emotion: any,
+}
+
   return (
     <SearchContainer>
       <Description>
@@ -97,6 +140,9 @@ const Searchbar = () => {
           isSearchable={false}
           placeholder="Filter for Pokemon Types"
           styles={styles}
+          defaultValue={filterSelect}
+          onChange={handleDropdownChange}
+          isOptionDisabled={() => filterSelect.length >= 2}
         />
         <SearchLabel>
           <svg
@@ -171,6 +217,6 @@ const ErrorMessage = styled.p`
 `;
 
 const ReactSelect = styled(Select)`
-  width: 250px;
+  width: 280px;
   margin-bottom: 5px;
 `;

@@ -11,13 +11,22 @@ import Searchbar from '../components/Searchbar';
 const Home: React.FC = () => {
   const isSearchVisible = useStore<boolean>(state => state.isSearchVisible);
   const pokemonList = useStore<PokemonRootObject[]>(state => state.pokemonList);
-  const searchInput = useStore(state => state.searchInput);
-  const filteredPokemon = pokemonList.filter(
+  const { searchInput, filterSelect } = useStore(state => state);
+  let filteredPokemon = pokemonList.filter(
     pokemon =>
       pokemon.name.includes(searchInput.searchString) ||
       pokemon.id.toString() === searchInput.searchString
   );
 
+  if (filterSelect.length > 0) {
+    filteredPokemon = filteredPokemon.filter(pokemon =>
+      filterSelect.includes(
+        pokemon.types[0].type.name || pokemon.types[1]?.type.name
+      )
+    );
+  }
+
+  console.log(filteredPokemon);
   return (
     <>
       <NavBar />
