@@ -11,22 +11,11 @@ const Searchbar = () => {
     setSearchInput,
   } = useStore(state => state);
 
-  // type OptionType = {
-  //   value: string;
-  //   icon: string;
-  // };
-
-  //React Select
-
-  type OptionType = {
-    value: string;
-    icon: Object;
-  };
-
   let options: any = [];
   const createOptions = () => {
     options = pokeTypesList?.results.slice(0, 18).map(result => {
       return {
+        label: result.name,
         value: result.name,
         icon: (
           <img
@@ -39,8 +28,6 @@ const Searchbar = () => {
     });
   };
   createOptions();
-
-  console.log(options);
 
   const styles: any = {
     control: (styles: any) => ({
@@ -70,6 +57,7 @@ const Searchbar = () => {
       borderRadius: '10px',
       backgroundColor: 'lightgray',
       width: '100px',
+      display: filterSelect.length >= 2 ? 'none' : 'static'
     }),
   };
 
@@ -87,8 +75,6 @@ const Searchbar = () => {
     );
   };
 
-  // Normal Searchbar
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const trimmedInputString = event.target.value.trim();
     if (
@@ -101,35 +87,18 @@ const Searchbar = () => {
     }
   };
 
-  const handleDropdownChange = (prop1: OptionType[]): void => {
-    const filterList: string[] | [] = prop1.map((prop: OptionType) => {
+  const handleDropdownChange = (newSelections: any) => {
+    const filterList: string[] | [] = newSelections.map((prop: any) => {
       return prop.value;
     });
     setFilterSelect(filterList);
   };
 
-
-  type OptionType = { [string]: any }
-
-type CommonProps = {
-  clearValue: () => void,
-  getStyles: (string, any) => {},
-  getValue: () => ValueType,
-  hasValue: boolean,
-  isMulti: boolean,
-  options: OptionsType,
-  selectOption: OptionType => void,
-  selectProps: any,
-  setValue: (ValueType, ActionTypes) => void,
-  emotion: any,
-}
-
   return (
     <SearchContainer>
       <Description>
-        <p>Search for Pokémon by name or using the National Pokédex number.</p>
+        Search for Pokémon by name or using the National Pokédex number.
       </Description>
-
       <SearchInputContainer>
         <ReactSelect
           options={options}
@@ -143,6 +112,10 @@ type CommonProps = {
           defaultValue={filterSelect}
           onChange={handleDropdownChange}
           isOptionDisabled={() => filterSelect.length >= 2}
+          
+
+          
+         
         />
         <SearchLabel>
           <svg

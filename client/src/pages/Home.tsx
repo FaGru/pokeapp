@@ -26,7 +26,6 @@ const Home: React.FC = () => {
     );
   }
 
-  console.log(filteredPokemon);
   return (
     <>
       <NavBar />
