@@ -26,12 +26,12 @@ const backendUseStore = create<backendInterface>((set, get) => ({
   userLoginInformation: userLoginInformation,
   isError: '',
   isLoading: false,
-  API_URL: process.env.REACT_APP_API_URL || '/users/',
+  API_URL: process.env.REACT_APP_API_URL || 'http://localhost:3001',
 
   register: async (formData: Object) => {
     set({ isLoading: true });
     set({ isError: '' });
-    const API_URL: string = get().API_URL;
+    const API_URL: string = get().API_URL + '/users';
     try {
       const response = await axios.post(API_URL, formData);
       if (response.data) {
@@ -56,7 +56,7 @@ const backendUseStore = create<backendInterface>((set, get) => ({
   login: async (formData: Object) => {
     set({ isLoading: true });
     set({ isError: '' });
-    const API_URL = get().API_URL + '/login';
+    const API_URL = get().API_URL + 'users/login';
     try {
       const response = await axios.post(API_URL, formData);
       if (response.data) {
@@ -81,7 +81,7 @@ const backendUseStore = create<backendInterface>((set, get) => ({
 
   getUserData: async (token: string) => {
     set({ isLoading: true, isError: '' });
-    const API_URL = get().API_URL + '/me';
+    const API_URL = get().API_URL + 'users/me';
     try {
       const response = await axios.get(API_URL, {
         //Pass Authentication Bearer token in header
@@ -103,6 +103,15 @@ const backendUseStore = create<backendInterface>((set, get) => ({
   logOut: () => {
     localStorage.removeItem('userLoginInformation');
     set({ userLoginInformation: {}, userData: null });
+  },
+  //////////liked Pokemon /////////////////
+
+  handleCatch: async (pokemonId: number) => {
+    set({ isLoading: true, isError: '' });
+    if (likedPokemon.includes(pokemonId)) {
+      likedList: [...likedList, pokemonId];
+    }
+    const API_URL = get().API_URL + `/pokemon/favorites/${pokemonId}`;
   },
 }));
 
