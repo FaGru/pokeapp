@@ -4,9 +4,14 @@ import { PokemonRootObject } from '../interfaces/pokemon_interface';
 import { SpeciesPokemonRootObject } from '../interfaces/species_interface';
 import { TypesPokemonRootObject } from '../interfaces/types_interface';
 import { EvolutionRootObject } from '../interfaces/evolution_interface';
+import { AllTypesRootObject } from '../interfaces/all_types_interface';
 
 interface pokeInterfaces {
   pokemonList: PokemonRootObject[];
+  pokeTypesList: AllTypesRootObject | null;
+  searchInput: { searchString: string; errorState: boolean };
+  filterSelect: string[];
+  isSearchVisible: boolean;
   pokemonSpeciesDetails: SpeciesPokemonRootObject | null;
   pokemonTypeDetails: TypesPokemonRootObject | null;
   pokemonEvolutionChain: EvolutionRootObject | null;
@@ -20,11 +25,22 @@ interface pokeInterfaces {
   fetchSpeciesData: (arg0: number) => Promise<void>;
   fetchTypeData: (arg0: string) => Promise<void>;
   fetchEvolutionData: (arg0: string) => Promise<void>;
+  fetchPokeTypesList: () => Promise<void>;
   setActiveDetailComponent: (arg0: string) => void;
+  setSearchInput: (arg0: string, arg1: boolean) => void;
+  setIsSearchVisible: () => void;
+  setFilterSelect: (arg0: string[]) => void;
 }
 
 const useStore = create<pokeInterfaces>((set, get) => ({
   pokemonList: [],
+  isSearchVisible: false,
+  searchInput: {
+    searchString: '',
+    errorState: false,
+  },
+  filterSelect: [],
+  pokeTypesList: null,
   pokemonSpeciesDetails: null,
   pokemonTypeDetails: null,
   pokemonEvolutionChain: null,
@@ -67,6 +83,14 @@ const useStore = create<pokeInterfaces>((set, get) => ({
     set({ loadingSpecies: false });
     set({ pokemonSpeciesDetails: data });
   },
+  fetchPokeTypesList: async () => {
+    const { data }: any = await axios
+      .get(`https://pokeapi.co/api/v2/type/`)
+      .catch(() => {
+        set({ error: true });
+      });
+    set({ pokeTypesList: data });
+  },
 
   fetchTypeData: async (pokemonTypesUrl: string) => {
     set({ loadingTypes: true });
@@ -88,6 +112,22 @@ const useStore = create<pokeInterfaces>((set, get) => ({
   },
   setActiveDetailComponent: (activeDetailNavButton: string) => {
     set({ activeDetailComponent: activeDetailNavButton });
+  },
+  setSearchInput: (userInput: string, errorState: boolean) => {
+    set({
+      searchInput: { searchString: userInput, errorState: errorState },
+    });
+  },
+  setIsSearchVisible: () => {
+    const isSearchVisible = get().isSearchVisible;
+    set({
+      isSearchVisible: !isSearchVisible,
+    });
+  },
+  setFilterSelect: (input: string[]) => {
+    set({
+      filterSelect: input,
+    });
   },
 }));
 export default useStore;
