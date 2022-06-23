@@ -57,7 +57,7 @@ const Searchbar = () => {
       borderRadius: '10px',
       backgroundColor: 'lightgray',
       width: '100px',
-      display: filterSelect.length >= 2 ? 'none' : 'static'
+      display: filterSelect.length >= 2 ? 'none' : 'static',
     }),
   };
 
@@ -112,10 +112,6 @@ const Searchbar = () => {
           defaultValue={filterSelect}
           onChange={handleDropdownChange}
           isOptionDisabled={() => filterSelect.length >= 2}
-          
-
-          
-         
         />
         <SearchLabel>
           <svg
