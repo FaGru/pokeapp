@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { PokecardProps } from '../interfaces/pokemon_interface';
 import points from '../images/points.svg';
 import backgroundPokeball from '../images/Background-Pokeball.svg';
+import backendUseStore from '../hooks/backendUseStore';
 
 export interface DanceProps {
   active: boolean;
@@ -20,6 +21,7 @@ const Pokecard: React.FC<PokecardProps> = ({
 }) => {
   const navigate = useNavigate();
   const [dance, setDance] = useState<boolean>(false);
+  const handleCatch = backendUseStore(state => state.handleCatch);
 
   const handleClick = () => {
     setDance(true);
@@ -27,8 +29,6 @@ const Pokecard: React.FC<PokecardProps> = ({
       navigate(`/${name}`);
     }, 1500);
   };
-
-  const handleCatch = () => {};
 
   return (
     <CardContainer
@@ -58,7 +58,7 @@ const Pokecard: React.FC<PokecardProps> = ({
         active={dance}
       />
       <FavoriteImage
-        onClick={handleCatch}
+        onClick={() => handleCatch(number)}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 25 25"
         width="30"

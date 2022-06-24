@@ -13,7 +13,7 @@ const getPokemons = asyncHandler(async (req, res) => {
 });
 
 //  @desc Set Pokemons
-//  @route GET /pokemons
+//  @route POST /pokemons
 //  @acess    privat
 
 const setPokemon = asyncHandler(async (req, res) => {
@@ -32,6 +32,7 @@ const setPokemon = asyncHandler(async (req, res) => {
 
 const updatePokemon = asyncHandler(async (req, res) => {
   const pokemon = await Pokemon.findById(req.params.id);
+
   const user = await User.findById(req.user.id);
 
   if (!pokemon) {
@@ -39,7 +40,7 @@ const updatePokemon = asyncHandler(async (req, res) => {
     throw new Error("Pokemon not found");
   }
 
-  const updatePokemon = await Pokemon.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  const updatePokemon = await Pokemon.findByIdAndUpdate(req.params.id, req.body.pokedexNumber, { new: true });
 
   //Check for the user
   if (!user) {
