@@ -8,7 +8,7 @@ const pokemonSchema = new mongoose.Schema(
       ref: "User",
     },
     pokedexNumber: {
-      type: [Number],
+      type: [],
     },
   },
   {

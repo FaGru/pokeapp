@@ -38,7 +38,7 @@ interface backendInterface {
   register: (arg0: Object) => Promise<void>;
   login: (arg0: Object) => Promise<void>;
   logOut: () => void;
-  handleCatch: (arg0: number) => Promise<void>;
+  setFavorites: (arg0: number) => Promise<void>;
 }
 
 const backendUseStore = create<backendInterface>((set, get) => ({
@@ -159,29 +159,64 @@ const backendUseStore = create<backendInterface>((set, get) => ({
     }
   },
 
-  handleCatch: async (pokemonId: number) => {
+  setFavorites: async (pokemonId: number) => {
     set({ isLoading: true, isError: '' });
     const favoriteList = get().favoriteList;
     const userLoginInformation: any = get().userLoginInformation;
-    console.log('LOGIN INFO', userLoginInformation.token);
+    const token = userLoginInformation.token;
+    console.log(token);
 
-    if (favoriteList) {
+    if (favoriteList.length === 0) {
+      const API_URL = get().API_URL + `pokemon/favorites`;
+
+      try {
+        // const form = new FormData();
+        // form.append('pokedexNumber', pokemonId])
+        const response = await axios.post(
+          API_URL,
+          { pokedexNumber: pokemonId },
+          {
+            //Pass Authentication Bearer token in header
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response);
+      } catch {}
+
+      ///// put
+    } else {
       const API_URL = get().API_URL + `pokemon/catch/${favoriteList[0]._id}`;
-      console.log('API', API_URL);
       console.log(favoriteList);
       try {
-        const response = await axios.put(API_URL, {
-          //Pass Authentication Bearer token in header
-          headers: {
-            Authorization: `Bearer ${userLoginInformation.token}`,
-          },
-          body: {
-            pokedexNumber: [51, 3, 70],
-          },
-          // body: {
-          //   pokedexNumber:
-          // }
-        });
+        console.log(pokemonId);
+        if (favoriteList[0].pokedexNumber.includes(pokemonId)) {
+          const newList = favoriteList[0].pokedexNumber.filter(
+            (pokemon: any) => pokemon !== pokemonId
+          );
+          const response = await axios.put(
+            API_URL,
+            { pokedexNumber: newList },
+            {
+              //Pass Authentication Bearer token in header
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+        } else {
+          const response = await axios.put(
+            API_URL,
+            { pokedexNumber: [...favoriteList[0].pokedexNumber, pokemonId] },
+            {
+              //Pass Authentication Bearer token in header
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+        }
 
         // set({ isLoading: true, isError: '' });
         // if (likedPokemon.includes(pokemonId)) {
@@ -191,6 +226,7 @@ const backendUseStore = create<backendInterface>((set, get) => ({
         // }
       } catch {}
     }
+    get().getFavoritesList(token);
   },
 }));
 
@@ -201,3 +237,4 @@ if (Object.keys(userLoginInformationLocalStorage).length !== 0) {
 }
 
 export default backendUseStore;
+[[4, 3], 1 , 2]

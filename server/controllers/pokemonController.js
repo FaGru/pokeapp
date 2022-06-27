@@ -40,8 +40,7 @@ const updatePokemon = asyncHandler(async (req, res) => {
     throw new Error("Pokemon not found");
   }
 
-  const updatePokemon = await Pokemon.findByIdAndUpdate(req.params.id, req.body.pokedexNumber, { new: true });
-
+  const updatePokemon = await Pokemon.findByIdAndUpdate(req.params.id, req.body, { new: true });
   //Check for the user
   if (!user) {
     //not authorized

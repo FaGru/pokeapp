@@ -21,13 +21,18 @@ const Pokecard: React.FC<PokecardProps> = ({
 }) => {
   const navigate = useNavigate();
   const [dance, setDance] = useState<boolean>(false);
-  const handleCatch = backendUseStore(state => state.handleCatch);
+  const setFavorites = backendUseStore(state => state.setFavorites);
 
   const handleClick = () => {
     setDance(true);
     setTimeout(function () {
       navigate(`/${name}`);
     }, 1500);
+  };
+
+  const handleCatch = (event: any) => {
+    event.stopPropagation();
+    setFavorites(number);
   };
 
   return (
@@ -58,7 +63,7 @@ const Pokecard: React.FC<PokecardProps> = ({
         active={dance}
       />
       <FavoriteImage
-        onClick={() => handleCatch(number)}
+        onClick={handleCatch}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 25 25"
         width="30"

@@ -12,8 +12,13 @@ const FavoritePage: React.FC = () => {
   const isSearchVisible = useStore<boolean>(state => state.isSearchVisible);
   const pokemonList = useStore<PokemonRootObject[]>(state => state.pokemonList);
   const { searchInput, filterSelect } = useStore(state => state);
-  const { userData } = backendUseStore(state => state);
-  let filteredPokemon = pokemonList.filter(
+  const { userData, favoriteList } = backendUseStore(state => state);
+
+  let filteredPokemon = pokemonList.filter(pokemon =>
+    favoriteList[0].pokedexNumber.includes(pokemon.id)
+  );
+
+  filteredPokemon = filteredPokemon.filter(
     pokemon =>
       pokemon.name.includes(searchInput.searchString) ||
       pokemon.id.toString() === searchInput.searchString
