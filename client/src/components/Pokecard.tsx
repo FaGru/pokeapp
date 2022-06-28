@@ -8,7 +8,7 @@ import points from '../images/points.svg';
 import backgroundPokeball from '../images/Background-Pokeball.svg';
 import backendUseStore from '../hooks/backendUseStore';
 
-export interface DanceProps {
+export interface Props {
   active: boolean;
 }
 
@@ -21,7 +21,7 @@ const Pokecard: React.FC<PokecardProps> = ({
 }) => {
   const navigate = useNavigate();
   const [dance, setDance] = useState<boolean>(false);
-  const setFavorites = backendUseStore(state => state.setFavorites);
+  const { userFavoritesData, setFavorites } = backendUseStore(state => state);
 
   const handleClick = () => {
     setDance(true);
@@ -66,6 +66,11 @@ const Pokecard: React.FC<PokecardProps> = ({
         onClick={handleCatch}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 25 25"
+        active={
+          userFavoritesData[0]?.favoritePokemonList?.includes(number)
+            ? true
+            : false
+        }
         width="30"
         height="30"
       >
@@ -110,17 +115,17 @@ const PokedexID = styled.p`
   margin: 0px;
 `;
 
-const FavoriteImage = styled.svg`
+const FavoriteImage = styled.svg<Props>`
   position: absolute;
-  top: 10px;
-  left: 50px;
-
+  top: 12px;
+  left: 65px;
+  fill-opacity: ${props => (props.active ? '1' : '0.3')};
   &:hover {
-    fill-opacity: 0.1;
+    fill-opacity: 1;
   }
 `;
 
-const PokemonIMG = styled.img<DanceProps>`
+const PokemonIMG = styled.img<Props>`
   position: absolute;
   place-self: end;
   top: -45px;

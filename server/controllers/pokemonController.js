@@ -17,13 +17,13 @@ const getPokemons = asyncHandler(async (req, res) => {
 //  @acess    privat
 
 const setPokemon = asyncHandler(async (req, res) => {
-  if (!req.body.pokedexNumber) {
+  if (!req.body.favoritePokemonList) {
     res.status(400);
     throw new Error("PLease add a text field");
   }
 
   const pokemon = await Pokemon.create({
-    pokedexNumber: req.body.pokedexNumber,
+    favoritePokemonList: req.body.favoritePokemonList,
     user: req.user.id,
   });
 

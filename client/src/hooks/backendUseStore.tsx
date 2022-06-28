@@ -2,7 +2,8 @@ import create from 'zustand';
 import axios from 'axios';
 
 const userLoginInformationLocalStorage = JSON.parse(
-  localStorage.getItem('userLoginInformation') || '{}'
+  localStorage.getItem('userLoginInformation') ||
+    '{   "_id": "",   "name": "",   "email": "",   "token": "" }'
 );
 interface userData {
   email: string;
@@ -10,29 +11,29 @@ interface userData {
   name: string;
 }
 
-interface userLoginInformation {
-  email: string;
+interface UserLoginInformation {
   _id: string;
   name: string;
+  email: string;
   token: string;
 }
 
-const initialize = () => {
-  return {
-    email: '',
-    _id: '',
-    name: '',
-    token: '',
-  };
-};
+interface UserFavoriteData {
+  _id: string;
+  user: string;
+  favoritePokemonList: number[];
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}
 
 interface backendInterface {
   userData: userData | null;
-  userLoginInformation: userLoginInformation | Object;
+  userLoginInformation: UserLoginInformation;
+  userFavoritesData: UserFavoriteData[] | [];
   isError: string;
   isLoading: boolean;
   API_URL: string;
-  favoriteList: any | null;
   getFavoritesList: (arg0: string) => Promise<void>;
   getUserData: (arg0: string) => Promise<void>;
   register: (arg0: Object) => Promise<void>;
@@ -44,7 +45,7 @@ interface backendInterface {
 const backendUseStore = create<backendInterface>((set, get) => ({
   userData: null,
   userLoginInformation: userLoginInformationLocalStorage,
-  favoriteList: [],
+  userFavoritesData: [],
   isError: '',
   isLoading: false,
   API_URL: process.env.REACT_APP_API_URL || 'http://localhost:3001/',
@@ -86,7 +87,6 @@ const backendUseStore = create<backendInterface>((set, get) => ({
           JSON.stringify(response.data)
         );
         get().getUserData(response.data.token);
-        //GET FAV
         set({
           isLoading: false,
           isError: '',
@@ -119,15 +119,17 @@ const backendUseStore = create<backendInterface>((set, get) => ({
     } catch (error) {
       set({
         isLoading: false,
-        isError: 'Can not get User Data. Please try again',
+        isError: 'Can not get User data. Please try again',
       });
     }
   },
   logOut: () => {
     localStorage.removeItem('userLoginInformation');
-    set({ userLoginInformation: {}, userData: null });
+    set({
+      userLoginInformation: { _id: '', name: '', email: '', token: '' },
+      userData: null,
+    });
   },
-  //////////liked Pokemon /////////////////
 
   getFavoritesList: async (token: string) => {
     const user = get().userLoginInformation;
@@ -143,12 +145,15 @@ const backendUseStore = create<backendInterface>((set, get) => ({
       });
 
       if (response.data) {
-        set({ isLoading: false, isError: '', favoriteList: response.data });
-        console.log('getFAV: ', response.data);
         set({
           isLoading: false,
           isError: '',
-          favoriteList: response.data,
+          userFavoritesData: response.data,
+        });
+        set({
+          isLoading: false,
+          isError: '',
+          userFavoritesData: response.data,
         });
       }
     } catch {
@@ -160,21 +165,19 @@ const backendUseStore = create<backendInterface>((set, get) => ({
   },
 
   setFavorites: async (pokemonId: number) => {
-    set({ isLoading: true, isError: '' });
-    const favoriteList = get().favoriteList;
-    const userLoginInformation: any = get().userLoginInformation;
-    const token = userLoginInformation.token;
-    console.log(token);
+    set({ isError: '' });
+    const userFavoritesData = get().userFavoritesData;
+    const userLoginInformation: UserLoginInformation =
+      get().userLoginInformation;
+    const token: string = userLoginInformation.token;
 
-    if (favoriteList.length === 0) {
+    if (userFavoritesData.length === 0) {
       const API_URL = get().API_URL + `pokemon/favorites`;
 
       try {
-        // const form = new FormData();
-        // form.append('pokedexNumber', pokemonId])
         const response = await axios.post(
           API_URL,
-          { pokedexNumber: pokemonId },
+          { favoritePokemonList: pokemonId },
           {
             //Pass Authentication Bearer token in header
             headers: {
@@ -182,22 +185,22 @@ const backendUseStore = create<backendInterface>((set, get) => ({
             },
           }
         );
-        console.log(response);
-      } catch {}
-
-      ///// put
+      } catch {
+        set({
+          isError: 'Error while liking. Please try again',
+        });
+      }
     } else {
-      const API_URL = get().API_URL + `pokemon/catch/${favoriteList[0]._id}`;
-      console.log(favoriteList);
+      const API_URL =
+        get().API_URL + `pokemon/catch/${userFavoritesData[0]._id}`;
       try {
-        console.log(pokemonId);
-        if (favoriteList[0].pokedexNumber.includes(pokemonId)) {
-          const newList = favoriteList[0].pokedexNumber.filter(
+        if (userFavoritesData[0].favoritePokemonList.includes(pokemonId)) {
+          const newList = userFavoritesData[0].favoritePokemonList.filter(
             (pokemon: any) => pokemon !== pokemonId
           );
           const response = await axios.put(
             API_URL,
-            { pokedexNumber: newList },
+            { favoritePokemonList: newList },
             {
               //Pass Authentication Bearer token in header
               headers: {
@@ -208,7 +211,12 @@ const backendUseStore = create<backendInterface>((set, get) => ({
         } else {
           const response = await axios.put(
             API_URL,
-            { pokedexNumber: [...favoriteList[0].pokedexNumber, pokemonId] },
+            {
+              favoritePokemonList: [
+                ...userFavoritesData[0].favoritePokemonList,
+                pokemonId,
+              ],
+            },
             {
               //Pass Authentication Bearer token in header
               headers: {
@@ -217,24 +225,19 @@ const backendUseStore = create<backendInterface>((set, get) => ({
             }
           );
         }
-
-        // set({ isLoading: true, isError: '' });
-        // if (likedPokemon.includes(pokemonId)) {
-        //   const newBackendData = likedPokemon.filter;
-        // } else {
-        //   const newBackendData = [...likedPokemon, pokemonId];
-        // }
-      } catch {}
+      } catch {
+        set({
+          isError: 'Error while liking. Please try again',
+        });
+      }
     }
     get().getFavoritesList(token);
   },
 }));
 
-if (Object.keys(userLoginInformationLocalStorage).length !== 0) {
+if (userLoginInformationLocalStorage.token.length !== 0) {
   backendUseStore
     .getState()
     .getUserData(userLoginInformationLocalStorage.token);
 }
-
 export default backendUseStore;
-[[4, 3], 1 , 2]

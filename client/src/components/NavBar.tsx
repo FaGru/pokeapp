@@ -121,12 +121,9 @@ const Button = styled.button`
   border: none;
   background: none;
   cursor: pointer;
-  /* background-color: gray; */
-  /* width: 70px;
-  height: 35px;
-  border-radius: 10px; */
+
   justify-self: flex-end;
-  /* box-shadow: 0px 0px 30px 5px white; */
+
 `;
 
 const FavoritesLink = styled(NavLink)`

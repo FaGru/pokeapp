@@ -79,7 +79,7 @@ export interface Pokedex {
   url: string;
 }
 
-export interface PokedexNumber {
+export interface favoritePokemonList {
   entry_number: number;
   pokedex: Pokedex;
 }
@@ -124,7 +124,7 @@ export interface SpeciesPokemonRootObject {
   names: Name[];
   order: number;
   pal_park_encounters: PalParkEncounter[];
-  pokedex_numbers: PokedexNumber[];
+  pokedex_numbers: favoritePokemonList[];
   shape: Shape;
   varieties: Variety[];
 }
