@@ -123,7 +123,6 @@ const Button = styled.button`
   cursor: pointer;
 
   justify-self: flex-end;
-
 `;
 
 const FavoritesLink = styled(NavLink)`
