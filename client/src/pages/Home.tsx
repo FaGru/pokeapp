@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 import { PokemonRootObject } from '../interfaces/pokemon_interface';

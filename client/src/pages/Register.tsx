@@ -28,7 +28,7 @@ const Register = () => {
 
   useEffect(() => {
     //If userLoginInformation found navigate to home
-    if (Object.keys(userLoginInformation).length !== 0) {
+    if (userLoginInformation.token.length !== 0) {
       navigate('/');
     }
   }, [userLoginInformation]);

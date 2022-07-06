@@ -13,17 +13,17 @@ const getPokemons = asyncHandler(async (req, res) => {
 });
 
 //  @desc Set Pokemons
-//  @route GET /pokemons
+//  @route POST /pokemons
 //  @acess    privat
 
 const setPokemon = asyncHandler(async (req, res) => {
-  if (!req.body.pokedexNumber) {
+  if (!req.body.favoritePokemonList) {
     res.status(400);
     throw new Error("PLease add a text field");
   }
 
   const pokemon = await Pokemon.create({
-    pokedexNumber: req.body.pokedexNumber,
+    favoritePokemonList: req.body.favoritePokemonList,
     user: req.user.id,
   });
 
@@ -32,6 +32,7 @@ const setPokemon = asyncHandler(async (req, res) => {
 
 const updatePokemon = asyncHandler(async (req, res) => {
   const pokemon = await Pokemon.findById(req.params.id);
+
   const user = await User.findById(req.user.id);
 
   if (!pokemon) {
@@ -40,7 +41,6 @@ const updatePokemon = asyncHandler(async (req, res) => {
   }
 
   const updatePokemon = await Pokemon.findByIdAndUpdate(req.params.id, req.body, { new: true });
-
   //Check for the user
   if (!user) {
     //not authorized

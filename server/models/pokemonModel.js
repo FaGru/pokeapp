@@ -7,8 +7,8 @@ const pokemonSchema = new mongoose.Schema(
       required: [true, "Please add pokemon number"],
       ref: "User",
     },
-    pokedexNumber: {
-      type: [Number],
+    favoritePokemonList: {
+      type: [],
     },
   },
   {
