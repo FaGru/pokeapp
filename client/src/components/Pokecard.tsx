@@ -30,7 +30,7 @@ const Pokecard: React.FC<PokecardProps> = ({
     }, 1500);
   };
 
-  const handleCatch = (event: any) => {
+  const handleCatch = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
     event.stopPropagation();
     setFavorites(number);
   };

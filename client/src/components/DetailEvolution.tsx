@@ -16,17 +16,18 @@ const DetailEvolution: React.FC<{ pokemon: PokemonRootObject }> = ({
   const activeDetailComponent = useStore<string>(
     state => state.activeDetailComponent
   );
-  const pokemonEvolutionChain = useStore<any | null>(
+  const pokemonEvolutionChain = useStore<EvolutionRootObject | null>(
     state => state.pokemonEvolutionChain
   );
 
   let pokemonEvolutionArray: PokemonRootObject[] = [];
 
   const findEvolutionPokemons = () => {
-    const pokemon1: String = pokemonEvolutionChain?.chain.species.name;
-    const pokemon2: String =
+    const pokemon1: string | undefined =
+      pokemonEvolutionChain?.chain.species.name;
+    const pokemon2: string | undefined =
       pokemonEvolutionChain?.chain.evolves_to[0]?.species.name;
-    const pokemon3: String =
+    const pokemon3: string | undefined =
       pokemonEvolutionChain?.chain.evolves_to[0]?.evolves_to[0]?.species.name;
     pokemonEvolutionArray = pokemonList.filter(pokemon => {
       if (

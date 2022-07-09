@@ -16,8 +16,12 @@ const DetailHeader: React.FC<{
     state => state.setActiveDetailComponent
   );
 
-  const handleActiveComponent = (event: any) => {
-    setActiveDetailComponent(event.target.innerText);
+  const handleActiveComponent = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    const { target } = event;
+    if (target)
+      setActiveDetailComponent((target as HTMLButtonElement).innerText);
   };
 
   return (

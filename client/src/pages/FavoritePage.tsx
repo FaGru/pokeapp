@@ -15,8 +15,6 @@ const FavoritePage: React.FC = () => {
   const { userData, userFavoritesData } = backendUseStore(state => state);
   let filteredPokemonList: PokemonRootObject[] = [];
 
-  console.log(pokemonList);
-
   if (userFavoritesData.length > 0) {
     filteredPokemonList = pokemonList.filter((pokemon: PokemonRootObject) =>
       userFavoritesData[0].favoritePokemonList.includes(pokemon.id)
