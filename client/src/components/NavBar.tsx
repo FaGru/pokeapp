@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import MobileNavigation from './MobileNavigation';
 import Navigation from './Navigation';
@@ -8,14 +8,23 @@ import Navigation from './Navigation';
 const NavBar = () => {
   const [isMobileUser, setIsMobileUser] = useState(false);
 
+  useEffect(() => {
+    if (window.innerWidth < 600) {
+      setIsMobileUser(true);
+      console.log('in true');
+    } else {
+      setIsMobileUser(false);
+    }
+  });
   window.onresize = () => {
     if (window.innerWidth < 600) {
       setIsMobileUser(true);
     } else {
       setIsMobileUser(false);
     }
-    console.log(window);
   };
+
+  console.log('Mobileuser', isMobileUser, 'window.size', window.innerWidth);
 
   return (
     <header>

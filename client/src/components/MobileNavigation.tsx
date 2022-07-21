@@ -97,11 +97,14 @@ const Wrapper = styled.div<BurgerMenuProps>`
   flex-direction: column;
   position: absolute;
 
+  width: 33%;
+
   top: 61px;
   right: 0;
   z-index: 10;
 
-  border: 1px solid var(--font-color-grey);
+  border-left: 1px solid var(--font-color-grey);
+  border-bottom: 1px solid var(--font-color-grey);
   border-top: 0;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -113,9 +116,9 @@ const Wrapper = styled.div<BurgerMenuProps>`
   ${props =>
     props.openMenu === true
       ? `  
-    animation: appear 1s ease;`
+    animation: appear 1s ease;
+    opacity: 0.92;`
       : `animation: disappear 1s ease`}
-  width: 33%;
 
   @keyframes appear {
     from {
@@ -123,7 +126,7 @@ const Wrapper = styled.div<BurgerMenuProps>`
     }
 
     to {
-      opacity: 1;
+      opacity: 0.92;
     }
   }
 
@@ -143,6 +146,7 @@ const LinkList = styled.ul`
   list-style: none;
   a {
     font-size: 120%;
+    line-height: 1.4rem;
     color: var(--font-color-black);
     text-decoration: none;
     :hover {
@@ -152,27 +156,22 @@ const LinkList = styled.ul`
 `;
 
 const Button = styled.button`
-  grid-column: 3 / 4;
   border: none;
   background: none;
   cursor: pointer;
   justify-self: flex-end;
 `;
 
-const FavoritesLink = styled(NavLink)`
-  grid-column: 2 / 3;
-`;
+const FavoritesLink = styled(NavLink)``;
 
 const BurgerIcon = styled(CgMenu)`
   width: 30px;
   height: 30px;
-  grid-column: 5 / 6;
   cursor: pointer;
 `;
 
 const CloseIcon = styled(CgClose)`
   width: 30px;
   height: 30px;
-  grid-column: 5 / 6;
   cursor: pointer;
 `;
