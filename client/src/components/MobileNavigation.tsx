@@ -97,7 +97,7 @@ const Wrapper = styled.div<BurgerMenuProps>`
   flex-direction: column;
   position: absolute;
 
-  width: 33%;
+  width: 36%;
 
   top: 61px;
   right: 0;
