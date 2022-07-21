@@ -2,7 +2,6 @@ import FavoritePage from './FavoritePage';
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import backendUseStore from '../hooks/backendUseStore';
-import { testPokedetails } from '../components/TestProps';
 
 describe('FavoritePage', () => {
   it('renders the message if no user is logged in', () => {

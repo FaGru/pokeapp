@@ -21,23 +21,16 @@ const DetailPage: React.FC<{ pokemon: PokemonRootObject }> = ({ pokemon }) => {
     navigate('/');
   };
 
-  const fetchSpeciesData = useStore(state => state.fetchSpeciesData);
-  const fetchTypeData = useStore(state => state.fetchTypeData);
-  const fetchEvoltionData = useStore(state => state.fetchEvolutionData);
-
   const {
     loadingSpecies,
     loadingTypes,
     loadingEvolution,
     error,
     pokemonSpeciesDetails,
-  } = useStore<{
-    loadingSpecies: boolean;
-    loadingTypes: boolean;
-    loadingEvolution: boolean;
-    pokemonSpeciesDetails: SpeciesPokemonRootObject | null;
-    error: boolean;
-  }>(state => state);
+    fetchEvolutionData,
+    fetchTypeData,
+    fetchSpeciesData,
+  } = useStore(state => state);
 
   useEffect(() => {
     fetchSpeciesData(pokemon.id);
@@ -45,7 +38,7 @@ const DetailPage: React.FC<{ pokemon: PokemonRootObject }> = ({ pokemon }) => {
   }, []);
   useEffect(() => {
     if (pokemonSpeciesDetails) {
-      fetchEvoltionData(pokemonSpeciesDetails.evolution_chain.url);
+      fetchEvolutionData(pokemonSpeciesDetails.evolution_chain.url);
     }
   }, [pokemonSpeciesDetails]);
 

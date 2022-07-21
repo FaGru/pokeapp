@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { nanoid } from 'nanoid';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -21,7 +20,10 @@ const Pokecard: React.FC<PokecardProps> = ({
 }) => {
   const navigate = useNavigate();
   const [dance, setDance] = useState<boolean>(false);
-  const { userFavoritesData, setFavorites } = backendUseStore(state => state);
+  const [isPopUpVisible, setIsPopUpVisible] = useState<boolean>(false);
+  const { userFavoritesData, setFavorites, userData } = backendUseStore(
+    state => state
+  );
 
   const handleClick = () => {
     setDance(true);
@@ -32,7 +34,14 @@ const Pokecard: React.FC<PokecardProps> = ({
 
   const handleCatch = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
     event.stopPropagation();
-    setFavorites(number);
+    if (userData) {
+      setFavorites(number);
+    } else {
+      setIsPopUpVisible(true);
+      setTimeout(function () {
+        setIsPopUpVisible(false);
+      }, 2000);
+    }
   };
 
   return (
@@ -41,6 +50,9 @@ const Pokecard: React.FC<PokecardProps> = ({
       color={color}
       onClick={handleClick}
     >
+      {isPopUpVisible && (
+        <PopUp>Please login to like your favorite Pokemons</PopUp>
+      )}
       <PokedexID>#{number}</PokedexID>
       <PokemonName>{name[0].toUpperCase() + name.slice(1)}</PokemonName>
 
@@ -54,6 +66,7 @@ const Pokecard: React.FC<PokecardProps> = ({
         ))}
       </TypeContainer>
       <PokeballImage alt="pokeball" width="130px" src={backgroundPokeball} />
+
       <PointsImage alt="points" src={points} />
       <PokemonIMG
         src={image}
@@ -235,6 +248,20 @@ const PointsImage = styled.img`
   position: absolute;
   top: -5px;
   right: 145px;
+`;
+
+const PopUp = styled.div`
+  position: absolute;
+  width: 260px;
+  background-color: lightgray;
+  border: 3px solid black;
+  border-radius: 10px;
+  top: -30px;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 3;
+  padding: 5px;
+  text-align: center;
 `;
 
 export default Pokecard;

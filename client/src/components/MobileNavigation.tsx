@@ -101,7 +101,6 @@ const Wrapper = styled.div<BurgerMenuProps>`
   right: 0;
   z-index: 10;
 
-
   border: 1px solid var(--font-color-grey);
   border-top: 0;
   border-bottom-left-radius: 10px;
@@ -118,28 +117,24 @@ const Wrapper = styled.div<BurgerMenuProps>`
       : `animation: disappear 1s ease`}
   width: 33%;
 
+  @keyframes appear {
+    from {
+      opacity: 0;
+    }
 
-
-}
-@keyframes appear {
-  from {
-    opacity: 0;
+    to {
+      opacity: 1;
+    }
   }
 
-  to {
-    opacity: 1;
-  }
-}
+  @keyframes disappear {
+    from {
+      opacity: 1;
+    }
 
-
-
-@keyframes disappear {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
+    to {
+      opacity: 0;
+    }
   }
 `;
 
