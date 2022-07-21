@@ -9,8 +9,12 @@ import reportWebVitals from './reportWebVitals';
 /**
  *  @returns {JSX.Element}: returns Homepage
  */
-const container: any = document.getElementById('root');
-const root: any = createRoot(container);
+
+const container: HTMLElement | null = document.getElementById('root');
+if (!container) {
+  throw new Error('Failed to find root document');
+}
+const root = createRoot(container);
 
 root.render(
   <React.StrictMode>

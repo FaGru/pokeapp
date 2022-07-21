@@ -74,41 +74,51 @@ const useStore = create<pokeInterfaces>((set, get) => ({
 
   fetchSpeciesData: async (pokemonId: number) => {
     set({ loadingSpecies: true });
-    const { data }: any = await axios
-      .get(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}/`)
-      .catch(() => {
-        set({ loadingSpecies: false });
-        set({ error: true });
-      });
-    set({ loadingSpecies: false });
-    set({ pokemonSpeciesDetails: data });
+
+    try {
+      const { data } = await axios.get<SpeciesPokemonRootObject>(
+        `https://pokeapi.co/api/v2/pokemon-species/${pokemonId}/`
+      );
+      set({ loadingSpecies: false });
+      set({ pokemonSpeciesDetails: data });
+    } catch {
+      set({ loadingSpecies: false });
+      set({ error: true });
+    }
   },
   fetchPokeTypesList: async () => {
-    const { data }: any = await axios
-      .get(`https://pokeapi.co/api/v2/type/`)
-      .catch(() => {
-        set({ error: true });
-      });
-    set({ pokeTypesList: data });
+    try {
+      const { data } = await axios.get<AllTypesRootObject>(
+        `https://pokeapi.co/api/v2/type/`
+      );
+      set({ pokeTypesList: data });
+    } catch {
+      set({ error: true });
+    }
   },
 
   fetchTypeData: async (pokemonTypesUrl: string) => {
     set({ loadingTypes: true });
-    const { data }: any = await axios.get(pokemonTypesUrl).catch(() => {
+
+    try {
+      const { data } = await axios.get<TypesPokemonRootObject>(pokemonTypesUrl);
+      set({ loadingTypes: false });
+      set({ pokemonTypeDetails: data });
+    } catch {
       set({ loadingTypes: false });
       set({ error: true });
-    });
-    set({ loadingTypes: false });
-    set({ pokemonTypeDetails: data });
+    }
   },
-  fetchEvolutionData: async (url: string) => {
+  fetchEvolutionData: async (url: string): Promise<void> => {
     set({ loadingEvolution: true });
-    const { data }: any = await axios.get(url).catch(() => {
+    try {
+      const { data } = await axios.get<EvolutionRootObject>(url);
+      set({ loadingEvolution: false });
+      set({ pokemonEvolutionChain: data });
+    } catch {
       set({ loadingEvolution: false });
       set({ error: true });
-    });
-    set({ loadingEvolution: false });
-    set({ pokemonEvolutionChain: data });
+    }
   },
   setActiveDetailComponent: (activeDetailNavButton: string) => {
     set({ activeDetailComponent: activeDetailNavButton });

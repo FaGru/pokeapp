@@ -196,7 +196,7 @@ const backendUseStore = create<backendInterface>((set, get) => ({
       try {
         if (userFavoritesData[0].favoritePokemonList.includes(pokemonId)) {
           const newList = userFavoritesData[0].favoritePokemonList.filter(
-            (pokemon: any) => pokemon !== pokemonId
+            (pokemon: number) => pokemon !== pokemonId
           );
           const response = await axios.put(
             API_URL,

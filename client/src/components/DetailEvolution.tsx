@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { nanoid } from 'nanoid';
 import { PokemonRootObject } from '../interfaces/pokemon_interface';
-import { EvolutionRootObject } from '../interfaces/evolution_interface';
 
 import arrow from '../images/arrow.svg';
 import backgroundPokeball from '../images/Background-Pokeball-Grey.svg';
@@ -12,21 +11,16 @@ import useStore from '../hooks/useStore';
 const DetailEvolution: React.FC<{ pokemon: PokemonRootObject }> = ({
   pokemon,
 }) => {
-  const pokemonList = useStore<PokemonRootObject[]>(state => state.pokemonList);
-  const activeDetailComponent = useStore<string>(
-    state => state.activeDetailComponent
-  );
-  const pokemonEvolutionChain = useStore<any | null>(
-    state => state.pokemonEvolutionChain
-  );
-
+  const { pokemonList, activeDetailComponent, pokemonEvolutionChain } =
+    useStore(state => state);
   let pokemonEvolutionArray: PokemonRootObject[] = [];
 
   const findEvolutionPokemons = () => {
-    const pokemon1: String = pokemonEvolutionChain?.chain.species.name;
-    const pokemon2: String =
+    const pokemon1: string | undefined =
+      pokemonEvolutionChain?.chain.species.name;
+    const pokemon2: string | undefined =
       pokemonEvolutionChain?.chain.evolves_to[0]?.species.name;
-    const pokemon3: String =
+    const pokemon3: string | undefined =
       pokemonEvolutionChain?.chain.evolves_to[0]?.evolves_to[0]?.species.name;
     pokemonEvolutionArray = pokemonList.filter(pokemon => {
       if (
@@ -52,25 +46,23 @@ const DetailEvolution: React.FC<{ pokemon: PokemonRootObject }> = ({
             Evolution Chart
           </Headline>
           <EvolutionContainer>
-            {pokemonEvolutionArray.map(
-              (pokemon: PokemonRootObject, index: number) => (
-                <ImageContainer key={nanoid()}>
-                  <PokeballImg
-                    src={backgroundPokeball}
-                    alt="Pokeball"
-                    height="120px"
-                    width="120px"
-                  />
-                  <PokemonImg
-                    src={pokemon.sprites.other.home.front_default}
-                    alt={pokemon.name}
-                    width="100px"
-                    height="100px"
-                    data-testid="pokemon-img"
-                  />
-                </ImageContainer>
-              )
-            )}
+            {pokemonEvolutionArray.map((pokemon: PokemonRootObject) => (
+              <ImageContainer key={nanoid()}>
+                <PokeballImg
+                  src={backgroundPokeball}
+                  alt="Pokeball"
+                  height="120px"
+                  width="120px"
+                />
+                <PokemonImg
+                  src={pokemon.sprites.other.home.front_default}
+                  alt={pokemon.name}
+                  width="100px"
+                  height="100px"
+                  data-testid="pokemon-img"
+                />
+              </ImageContainer>
+            ))}
 
             {pokemonEvolutionArray[1] ? (
               <ArrowImg src={arrow} alt="arrow" width="30px" height="30px" />

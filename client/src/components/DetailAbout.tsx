@@ -1,21 +1,12 @@
 import styled from 'styled-components';
 import { PokemonRootObject } from '../interfaces/pokemon_interface';
-import { SpeciesPokemonRootObject } from '../interfaces/species_interface';
-import { TypesPokemonRootObject } from '../interfaces/types_interface';
 import useStore from '../hooks/useStore';
 
 export const DetailAbout: React.FC<{
   pokemon: PokemonRootObject;
 }> = ({ pokemon }) => {
-  const pokemonTypeDetails = useStore<TypesPokemonRootObject | null>(
-    state => state.pokemonTypeDetails
-  );
-  const pokemonSpeciesDetails = useStore<SpeciesPokemonRootObject | null>(
-    state => state.pokemonSpeciesDetails
-  );
-  const activeDetailComponent = useStore<string>(
-    state => state.activeDetailComponent
-  );
+  const { pokemonTypeDetails, pokemonSpeciesDetails, activeDetailComponent } =
+    useStore(state => state);
 
   return (
     <>
