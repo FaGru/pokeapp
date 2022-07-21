@@ -97,7 +97,7 @@ const Wrapper = styled.div<BurgerMenuProps>`
   flex-direction: column;
   position: absolute;
 
-  width: 36%;
+  width: 42%;
 
   top: 61px;
   right: 0;
@@ -146,7 +146,7 @@ const LinkList = styled.ul`
   list-style: none;
   a {
     font-size: 120%;
-    line-height: 1.4rem;
+    line-height: 1.3rem;
     color: var(--font-color-black);
     text-decoration: none;
     :hover {
