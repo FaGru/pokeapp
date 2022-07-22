@@ -19,7 +19,6 @@ const MobileNavigation = () => {
   const handleClick = (): void => {
     setIsSearchVisible();
   };
-  console.log(openMenu);
 
   return (
     <MobileNav>
@@ -114,7 +113,7 @@ const Wrapper = styled.div<BurgerMenuProps>`
   background-color: lightgray;
 
   ${props =>
-    props.openMenu === true
+    props.openMenu
       ? `  
     animation: appear 1s ease;
     opacity: 0.92;`

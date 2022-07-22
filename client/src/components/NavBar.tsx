@@ -11,7 +11,6 @@ const NavBar = () => {
   useEffect(() => {
     if (window.innerWidth < 600) {
       setIsMobileUser(true);
-      console.log('in true');
     } else {
       setIsMobileUser(false);
     }
@@ -23,8 +22,6 @@ const NavBar = () => {
       setIsMobileUser(false);
     }
   };
-
-  console.log('Mobileuser', isMobileUser, 'window.size', window.innerWidth);
 
   return (
     <header>
