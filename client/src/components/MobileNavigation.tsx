@@ -22,7 +22,7 @@ const MobileNavigation = () => {
 
   return (
     <MobileNav>
-      <Button onClick={handleClick} aria-label="show search">
+      <SearchButton onClick={handleClick} aria-label="show search">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="25"
@@ -32,22 +32,21 @@ const MobileNavigation = () => {
         >
           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
         </svg>
-      </Button>
+      </SearchButton>
       {openMenu && (
         <Wrapper openMenu={openMenu}>
           {userData ? (
             <LinkList>
-              <li>Hello {userData.name}!</li>
-              <li>
-                <button onClick={() => logOut()}>
-                  <FaSignOutAlt /> Logout
-                </button>
-              </li>
               <li>
                 <FavoritesLink to="/favorites">
                   <span>Favorites</span>
                   <GrFavorite />
                 </FavoritesLink>
+              </li>
+              <li onClick={() => logOut()}>
+                <NavLink to="/">
+                  Logout <FaSignOutAlt />
+                </NavLink>
               </li>
             </LinkList>
           ) : (
@@ -64,8 +63,8 @@ const MobileNavigation = () => {
               </li>
               <li>
                 <FavoritesLink to="/favorites">
-                  <GrFavorite />
                   <span> Favorites </span>
+                  <GrFavorite />
                 </FavoritesLink>
               </li>
             </LinkList>
@@ -73,9 +72,12 @@ const MobileNavigation = () => {
         </Wrapper>
       )}
       {!openMenu ? (
-        <BurgerIcon onClick={() => setOpenMenu(!openMenu)} />
+        <BurgerIcon
+          data-testid="BurgerMenuIcon"
+          onClick={() => setOpenMenu(!openMenu)}
+        />
       ) : (
-        <CloseIcon onClick={() => setOpenMenu(!openMenu)} />
+        <CloseIcon data-testid="CloseIcon" onClick={() => setOpenMenu(!openMenu)} />
       )}
     </MobileNav>
   );
@@ -94,6 +96,7 @@ const MobileNav = styled.div`
 const Wrapper = styled.div<BurgerMenuProps>`
   display: flex;
   flex-direction: column;
+
   position: absolute;
 
   width: 42%;
@@ -143,8 +146,13 @@ const Wrapper = styled.div<BurgerMenuProps>`
 const LinkList = styled.ul`
   text-decoration: none;
   list-style: none;
-  a {
+
+  li {
+    margin: 5px;
     font-size: 120%;
+  }
+
+  a {
     line-height: 1.3rem;
     color: var(--font-color-black);
     text-decoration: none;
@@ -152,16 +160,23 @@ const LinkList = styled.ul`
       border-bottom: 1px solid black;
     }
   }
+  button {
+    margin-top: 10px;
+  }
 `;
 
-const Button = styled.button`
+const SearchButton = styled.button`
   border: none;
   background: none;
   cursor: pointer;
   justify-self: flex-end;
 `;
 
-const FavoritesLink = styled(NavLink)``;
+const FavoritesLink = styled(NavLink)`
+  span {
+    margin-right: 5px;
+  }
+`;
 
 const BurgerIcon = styled(CgMenu)`
   width: 30px;

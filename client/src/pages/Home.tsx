@@ -5,6 +5,9 @@ import NavBar from '../components/NavBar';
 import useStore from '../hooks/useStore';
 import Searchbar from '../components/Searchbar';
 
+export interface isSearchVisible {
+  isSearchVisible: boolean;
+}
 const Home: React.FC = () => {
   const { searchInput, filterSelect, pokemonList, isSearchVisible } = useStore(
     state => state
@@ -30,7 +33,7 @@ const Home: React.FC = () => {
     <>
       <NavBar />
       {isSearchVisible && <Searchbar />}
-      <PokemonContainer>
+      <PokemonContainer isSearchVisible={isSearchVisible}>
         {filteredPokemon.map(pokemon => (
           <Pokecard
             key={pokemon.id}
@@ -48,10 +51,12 @@ const Home: React.FC = () => {
 
 export default Home;
 
-const PokemonContainer = styled.div`
+const PokemonContainer = styled.div<isSearchVisible>`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 40px;
-  margin: 110px 0 80px 0;
+
+  margin-top: ${props => (props.isSearchVisible ? '40px' : '110px')};
+  margin-bottom: 80px;
 `;

@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import backendUseStore from '../hooks/backendUseStore';
 import Register from '../pages/Register';
 
 describe('Register', () => {

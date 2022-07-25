@@ -166,7 +166,7 @@ const SearchContainer = styled.div`
 
 const Description = styled.p`
   text-align: center;
-  margin-top: 120px;
+  margin-top: 100px;
   color: var(--font-color-grey);
 `;
 
