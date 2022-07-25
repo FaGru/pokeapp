@@ -69,7 +69,6 @@ export default Navigation;
 const NavigationDesktop = styled.nav`
   display: grid;
   grid-template-columns: auto 50px 50px 200px;
-  align-items: center;
 `;
 
 const LinkList = styled.ul`
@@ -95,9 +94,10 @@ const Button = styled.button`
   border: none;
   background: none;
   cursor: pointer;
-  justify-self: flex-end;
 `;
 
 const FavoritesLink = styled(NavLink)`
   grid-column: 2 / 3;
+  align-self: center;
+  justify-self: center;
 `;
