@@ -77,7 +77,10 @@ const MobileNavigation = () => {
           onClick={() => setOpenMenu(!openMenu)}
         />
       ) : (
-        <CloseIcon data-testid="CloseIcon" onClick={() => setOpenMenu(!openMenu)} />
+        <CloseIcon
+          data-testid="CloseIcon"
+          onClick={() => setOpenMenu(!openMenu)}
+        />
       )}
     </MobileNav>
   );
