@@ -15,8 +15,6 @@ const FavoritePage: React.FC = () => {
   const { userData, userFavoritesData } = backendUseStore(state => state);
   let filteredPokemonList: PokemonRootObject[] = [];
 
-  console.log(pokemonList);
-
   if (userFavoritesData.length > 0) {
     filteredPokemonList = pokemonList.filter((pokemon: PokemonRootObject) =>
       userFavoritesData[0].favoritePokemonList.includes(pokemon.id)
@@ -98,7 +96,7 @@ const RequestMessage = styled.div`
   background-color: #f2f2f2;
 `;
 const PageContainer = styled.div`
-  margin: 110px 0 40px 0;
+  margin: 110px 0 80px 0;
 
   h3 {
     text-align: center;

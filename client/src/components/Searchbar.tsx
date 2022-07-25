@@ -1,6 +1,7 @@
 import useStore from '../hooks/useStore';
 import styled from 'styled-components';
 import Select from 'react-select';
+import ValueType from 'react-select';
 
 const Searchbar = () => {
   const {
@@ -11,17 +12,23 @@ const Searchbar = () => {
     setSearchInput,
   } = useStore(state => state);
 
-  let options: any = [];
+  interface Props {
+    value: string;
+    label: string;
+    icon: JSX.Element;
+  }
+
+  let options: Array<Props> | undefined = [];
   const createOptions = () => {
-    options = pokeTypesList?.results.slice(0, 18).map(result => {
+    options = pokeTypesList?.results.slice(0, 18).map(singleType => {
       return {
-        label: result.name,
-        value: result.name,
+        label: singleType.name,
+        value: singleType.name,
         icon: (
           <img
-            src={`./images/type-${result.name}.svg`}
+            src={`./images/type-${singleType.name}.svg`}
             height="25px"
-            alt={result.name}
+            alt={singleType.name}
           ></img>
         ),
       };
@@ -29,7 +36,7 @@ const Searchbar = () => {
   };
   createOptions();
 
-  const styles: any = {
+  const styles = {
     control: (styles: any) => ({
       ...styles,
       border: '2px solid black',
@@ -61,7 +68,7 @@ const Searchbar = () => {
     }),
   };
 
-  const getLabelFrom: any = (event: any) => {
+  const getLabelFrom: any = (event: Props) => {
     return (
       <div
         style={{
@@ -74,7 +81,6 @@ const Searchbar = () => {
       </div>
     );
   };
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const trimmedInputString = event.target.value.trim();
     if (
@@ -87,8 +93,16 @@ const Searchbar = () => {
     }
   };
 
+  type TOption = [
+    {
+      label: string | number;
+      value: string | number;
+      icon: JSX.Element;
+    }
+  ];
+
   const handleDropdownChange = (newSelections: any) => {
-    const filterList: string[] | [] = newSelections.map((prop: any) => {
+    const filterList = newSelections.map((prop: any): string => {
       return prop.value;
     });
     setFilterSelect(filterList);
@@ -152,7 +166,7 @@ const SearchContainer = styled.div`
 
 const Description = styled.p`
   text-align: center;
-  margin-top: 120px;
+  margin-top: 100px;
   color: var(--font-color-grey);
 `;
 
