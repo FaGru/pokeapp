@@ -12,7 +12,6 @@ describe('NavBar', () => {
       </MemoryRouter>
     );
 
-    // const all = screen.getByRole('');
     const logo = screen.getByRole('img', { name: 'Pokemon Logo' });
     const search = screen.getByRole('button', { name: 'show search' });
     const login = screen.getByText('Login');

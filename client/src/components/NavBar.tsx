@@ -6,7 +6,7 @@ import MobileNavigation from './MobileNavigation';
 import Navigation from './Navigation';
 
 const NavBar = () => {
-  const [isMobileUser, setIsMobileUser] = useState(false);
+  const [isMobileUser, setIsMobileUser] = useState<boolean>(false);
 
   useEffect(() => {
     if (window.innerWidth < 600) {
